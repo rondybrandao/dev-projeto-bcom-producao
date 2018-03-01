@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<title>Prototipo Manutencao - teste com modelform</title>
+</head>
+<body>
+<div class="container">
+	<form class="form" method="POST">{% csrf_token %}
+		
+		<h2><a href="#" id="addScnt">Add Another Input Box</a></h2>
+
+		<div id="p_scents">
+		    <p>
+		        <label for="p_scnts"><input type="text" id="p_scnt" size="20" name="p_scnt" value="" placeholder="Input Value" /></label>
+		    </p>
+		</div>					  
+	</form>
+	<div>
+	
+	</div>
+</div>
+
+<!-- Latest compiled and minified JavaScript -->
+
+<script
+  src="https://code.jquery.com/jquery-1.6.4.min.js"
+  integrity="sha256-lR1rrjnrFy9XqIvWhvepIc8GD9IfWWSPDSC2qPmPxaU="
+  crossorigin="anonymous"></script>
+<script src="{% static 'js/manutencao.js' %}"></script>
+</body>
+</html>

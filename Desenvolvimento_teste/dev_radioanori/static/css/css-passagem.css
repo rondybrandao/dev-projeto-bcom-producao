@@ -1,0 +1,47 @@
+
+.header { 
+  background: url("header-ponte-rio-negro.png") no-repeat center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+ 
+}
+
+.panel-default {
+opacity: 0.9;
+margin-top:30px;
+}
+.form-group.last { margin-bottom:0px; }
+
+
+select:invalid {
+  color: #9d9d9d;
+}
+
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 10px); 
+}
+
+.form-control {
+	font-size: 14px;
+}
+
+.btn-product{
+    width: 100%;
+    
+}
+label {color: #0275d8;}
+
+h4 {
+	color: red;
+	font-size: 15px;
+}
+
+@media only screen and (max-width: 980px) {
+	col-md-4{
+		width: 100%;
+		padding-left: 0;
+	}	
+}
+

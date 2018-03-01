@@ -1,0 +1,192 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Radio Anori/Passagens</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/css-lista_viagem.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/css-passagem.css' %}">
+<link rel="stylesheet" href="{% static 'css/css-navbarmenu.css' %}">
+
+<script type="text/javascript" src="{% static 'js/navbarmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/carrinho.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div>
+	<div id="flipkart-navbar">
+	    <div class="container-fluid">
+	        <div class="row row1">
+	            
+	        </div>
+	        <div class="row row2">
+	            <div class="col-sm-2 col-md-2">
+	                <h2 style="margin:0px;"><span class="smallnav menu" onclick="openNav()">☰ beiraonline.com</span></h2>
+	                <h1 style="margin:0px;" ><a href="/" ><span class="largenav">beiraonline.com</span></a></h1>
+	            </div>
+	            <div class="col-sm-8 col-md-8 col-xs-11">	               
+	                <form class="navbar-form"  method="GET">
+				        <div class="form-group">
+				         <div class="col-md-3">
+				          <select class="form-control carrinho" id="sel1" name="sel1" >
+					        <option value="" disabled selected>De:</option>
+					        <option value="Anori" name="anori">Anori</option>
+					        <option value="Anamã" name="anama">Anamã</option>
+					        <option value="Codajas" name="codajas">Codaja</option>
+					        <option value="Coari" name="coari">Coari</option>
+					        <option value="Manaus" name="manaus">Manaus</option>
+				    	 </select>
+				        </div>
+				        <div class="col-md-3">
+				         <select class="form-control carrinho" id="sel2"  name="sel2">
+					        <option value="" disabled selected>Para:</option>
+					        <option value="Anori" name="anori">Anori</option>
+					        <option value="Anamã" name="anama">Anamã</option>
+					        <option value="Codajas" name="codajas">Codaja</option>
+					        <option value="Coari" name="coari">Coari</option>
+					        <option value="Manaus" name="manaus">Manaus</option>
+				    	 </select>
+				        </div>
+				        
+				        <div class="col-md-3">
+				         <input type="date" class="form-control carrinho" name="data" placeholder="Data da Viagem" placeholder="Data da viagem">
+				        </div>
+				        
+				        <div class="col-md-3">
+				         <button type="submit" class="btn btn-default">Procurar</button>
+				        </div>
+				       
+				       </div>
+				        
+				     </form>
+				
+	            </div>
+	            <div class="cart largenav col-sm-2 col-md-2">
+	                <a class="cart-button">
+	                    <i class="fa fa-shopping-cart" aria-hidden="true">Carrinho R${{total}}</i>
+	                </a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	</div>
+	<div id="mySidenav" class="sidenav">
+	    <div class="container" style="background-color: #2874f0; padding-top: 10px;">
+	        <h1 style="margin:0px;" ><a href="/passagens" ><span class="sidenav-heading">beiraonline.com</span></a></h1>
+	        <!--  <span class="sidenav-heading">beiraonline.com</span>-->
+	        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+	    </div>
+	    <a href="#">Inicio</a>
+	    <a href="#">Promoções</a>
+	    <a href="#">Contato</a>
+	    <a href="#">Nosso compromisso</a>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+			   <form class="form-horizontal"  method="POST">{% csrf_token %}
+				  <ul class="event-list">
+					<li>
+						<time datetime="2014-07-20">
+						
+							<span class="day">{{passagem.viagem.data_da_viagem|date:"d M" }}</span>
+							<span class="month">08:00</span>
+							<span class="year">2017</span>
+							<span class="time">ALL DAY</span>
+						</time>
+						<img alt="semeador Pinheiro" src="{% static "imagens/ajato.jpg" %}" />
+						<div class="info">
+							<h2 class="title">{{passagem.viagem.embarcacao}}</h2>
+							<ul>
+								<a href="#my_modal" data-toggle="modal" title="Add this item" class="btn btn-primary">
+									<li style="width:33%;"> <span class="fa fa-male"></span><span> Adulto-</span>{{passagem.qnt_adulto}} </li>
+								</a>
+								
+								<a href="#my_modal" data-toggle="modal" data-book-id="my_id_value" title="Add this item" class="btn btn-primary">
+									<li style="width:33%;"> <span class="fa fa-child"></span><span> Criança-</span>{{passagem.qnt_crianca}} </li>
+								</a>
+								
+																
+								<div class="modal" id="my_modal">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								          <h4 class="modal-title">Modal header</h4>
+								      </div>
+								      <div class="modal-body">
+								        <p>Adulto</p>
+								        <input type="text" name="bookId" value=""/>
+								        <p>Criança</p>
+								        <input type="text" name="bookId" value=""/>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Mudar</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>		
+							</ul>
+							
+							<p class="desc">{{passagem.viagem.origem}} - {{passagem.viagem.destino}}</p>
+							<p class="desc">Total: R$ {{total}}</p>
+							
+						</div>
+						<div class="btn-pesquisar text-right">
+					        	<button type="submit" class="btn btn-primary btn-lg btn-block">Comprar</button>
+					    </div>
+					    </li>
+					 </ul>
+		          </form>
+		        </div>				
+			</div>
+		</div>
+		
+		<footer>
+    <div class="footerHeader" ></div>
+    <div class="container-fluid">
+		<div class="col-md-4" >
+		    <h3><strong>beiraonline.com</strong></h3>
+		    <p>
+		        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		    </p>
+		</div>
+		
+		<div class="col-md-4 payment">
+		    <h4 style="color: white;">Formas de Pagamento</h4>
+		    <div class="col-md-4"><a href="#" ><img src="{% static "imagens/visa-card.png" %}" class="img-thumbnail"></a></div>
+		    <div class="col-md-4"><a href="#" ><img src="{% static "imagens/american-express-3.png" %}" class="img-thumbnail" ></a></div>
+		    <div class="col-md-4"><a href="#" ><img src="{% static "imagens/mastercard-card.png" %}" class="img-thumbnail"  ></a></div>
+		</div>
+		<div class="col-md-4" >
+		    <h4 style="color: white;">Contato</h>
+		    <br>
+		    <ul>
+		    <br>
+		        <li>Fone : (92) 99252 - 7342</li>
+		        <li>E-mail : beiraonline@beiraonline.com</li>
+		        
+		    </ul>
+		    <p>
+		        
+		    </p>
+		    <ul class="sm">
+		        <li><a href="#" ><img src="https://www.facebook.com/images/fb_icon_325x325.png" class="img-responsive"></a></li>
+		        <li><a href="#" ><img src="https://lh3.googleusercontent.com/00APBMVQh3yraN704gKCeM63KzeQ-zHUi5wK6E9TjRQ26McyqYBt-zy__4i8GXDAfeys=w300" class="img-responsive" ></a></li>
+		        <li><a href="#" ><img src="http://playbookathlete.com/wp-content/uploads/2016/10/twitter-logo-4.png" class="img-responsive"  ></a></li>
+		    </ul>
+		</div>
+    </div>
+</footer>
+</body>
+
+
+</html>

@@ -1,0 +1,374 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Radio Anori/Passagens</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+<link rel="stylesheet" href="{% static 'css/css-passagem.css' %}">
+<link rel="stylesheet" href="{% static 'css/css-body-card.css' %}">
+<link rel="stylesheet" href="{% static 'css/css-footer.css' %}">
+<link rel="stylesheet" href="{% static 'css/css-navbarmenu.css' %}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+	<body>
+		<div id="flipkart-navbar">
+	    <div class="container">
+	        <div class="row row1">
+	            
+	        </div>
+	        <div class="row row2">
+	            <div class="col-sm-2">
+	                <h2 style="margin:0px;"><span class="smallnav menu" onclick="openNav()">☰ beiraonline.com</span></h2>
+	                <h1 style="margin:0px"><span class="largenav">beiraonline.com</span></h1>
+	            </div>
+	            <div class="col-sm-8 col-xs-11">
+	                
+	            </div>
+	            <div class="cart largenav col-sm-2">
+	                <a class="cart-button">
+	                    <i class="fa fa-shopping-cart" aria-hidden="true"> Carrinho</i><span class="item-number">0</span>
+	                </a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div id="mySidenav" class="sidenav">
+	    <div class="container" style="background-color: #2874f0; padding-top: 10px;">
+	        <span class="sidenav-heading">Home</span>
+	        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+	    </div>
+	    <a href="http://clashhacks.in/">Link</a>
+	    <a href="http://clashhacks.in/">Link</a>
+	    <a href="http://clashhacks.in/">Link</a>
+	    <a href="http://clashhacks.in/">Link</a>
+	</div>
+	<div class="header">
+		<div class="container">
+		    <div class="row">
+		    	<div class="col-md-7"></div>
+		        <div class="col-md-4">
+		            <div class="panel panel-default">
+		                <div class="panel-heading">
+		                    <span class="glyphicon glyphicon-lock"></span> Passagem</div>
+		                <div class="panel-body">
+		                    <form class="form-horizontal" role="form" action="" method="POST">{% csrf_token %}
+		                    <div class="form-group">  
+		                        <div class="col-sm-12">
+		                            <select class="form-control" id="sel1" name="sel1" >
+								        <option value="" disabled selected>De:</option>
+								        <option value="Anori" name="anori">Anori</option>
+								        <option value="Anamã" name="anama">Anamã</option>
+								        <option value="Codajas" name="codajas">Codaja</option>
+								        <option value="Coari" name="coari">Coari</option>
+								        <option value="Manaus" name="manaus">Manaus</option>
+							    	</select>
+		                        </div>
+		                    </div>
+		                    <div class="form-group">
+		                        <div class="col-sm-12">
+		                            <select class="form-control" id="sel2"  name="sel2">
+								        <option value="" disabled selected>Para:</option>
+								        <option value="Anori" name="anori">Anori</option>
+								        <option value="Anamã" name="anama">Anamã</option>
+								        <option value="Codajas" name="codajas">Codaja</option>
+								        <option value="Coari" name="coari">Coari</option>
+								        <option value="Manaus" name="manaus">Manaus</option>
+							    	</select>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="form-group">
+		                        <div class="col-sm-12">
+		                            <input type="date" class="form-control" name="data" placeholder="Data da Viagem" placeholder="Data da viagem">
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="form-group">
+		                        <div class="col-sm-12">
+		                            <input type="number" class="form-control" name="adulto" placeholder="Adulto">
+		                        </div>
+		                    </div>
+		                    <div class="form-group">
+		                        <div class="col-sm-12">
+		                            <input type="number" class="form-control" name="crianca" placeholder="Criança">
+		                        </div>
+		                    </div>
+		                    <div class="form-group last">
+		                        <div class="col-sm-12">
+		                            <button type="submit" class="btn btn-primary btn-lg">
+		                                Pesquisar</button>
+		                                 
+		                        </div>
+		                    </div>
+		                    </form>
+		                </div>
+		           
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<div class="thumbnail" >
+					<img src="{% static "imagens/ajato.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="{% url 'carrinho' pk=31 %}" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="thumbnail" >
+					<img src="{% static "imagens/ajato2.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="{% url 'carrinho' pk=31 %}" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>				</div>
+			</div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="thumbnail" >
+					<img src="{% static "imagens/ajato.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>
+				</div>
+			</div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="thumbnail" >
+					<img src="{% static "imagens/ajato2.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="{% url 'carrinho' pk=31 %}" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>
+				</div>
+			</div>
+        </div>
+        
+        <div class="col-md-12">
+			<div class="col-xs-12 col-sm-6 col-md-3">
+				<div class="thumbnail" >
+					<img src="{% static "imagens/ajato.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="{% url 'carrinho' pk=31 %}" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="thumbnail" >
+					<img src="{% static "imagens/ajato2.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="{% url 'carrinho' pk=31 %}" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>				</div>
+			</div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="thumbnail" >
+					<img src="{% static "imagens/ajato.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>
+				</div>
+			</div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+    			<div class="thumbnail" >
+					<img src="{% static "imagens/ajato2.jpg" %}" class="img-responsive">
+					<div class="caption">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 card-titulo">
+    							<h3><label>Expresso Kdson Araujo</label></h3>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+								<h3 style="margin:5px auto;"><label>R$100,00</label></h3>
+    						</div>
+						</div>
+						<p>Manaus - Anori</p>
+						<p>saída: 15/12/2017</p>
+						<p>local: Balsa Amarela</p>
+						<p>horario: 07:00hr</p>
+						<a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Comprar</a>
+					</div>
+				</div>
+			</div>
+        </div> 
+      
+	</div>
+</div>
+
+	<div class="col-lg-9">
+		
+	</div>
+	<br>
+	<div class=cards>
+    <div class="container">
+        <div class="row">
+		<div class="card1 col-md-4">
+            <h3 class="text-center mb-5 ">Visite Codajás</h3>
+          <div class="card card-01">
+          <img class="card-img-top" src="{% static "imagens/prossissao-sao-francisco-400x300.jpg" %}" alt="Card image cap">
+          <div class="card-body">
+            <span class="badge-box"><i class="whatsapp fa fa-whatsapp"></i><i class="facebook fa fa-facebook-official"></i></span>
+            <h4 class="card-title">Codajás</h4>
+            <p class="card-text">Sinonimo de fé e tradição, a prossissão de São Francisco no minicipio de Anamã é uma das mais celebradas no Amazonas</p>
+            <a href="#" class="btn btn-default text-uppercase">Reservar</a>
+          </div>
+        </div>
+        </div>
+        
+        <div class="card2 col-md-4">
+            <h3 class="text-center mb-5">Visite Anori</h3>
+          <div class="card card-01">
+          <img class="card-img-top" src="{% static "imagens/igreja-anori.jpg" %}" alt="Card image cap">
+          <div class="card-body">
+            <span class="badge-box"><i class="whatsapp fa fa-whatsapp"></i><i class="facebook fa fa-facebook-official"></i></span>
+            <h4 class="card-title">Anori</h4>
+            <p class="card-text">Terra de mulher bonita, açaí com tapioca, e do povo mais hospitaleiro do medio solimões. Ajato saindo todos os dias.</p>
+            <a href="#" class="btn btn-default text-uppercase">Reservar</a>
+          </div>
+        </div>
+        </div>
+        
+        <div class="card3 col-md-4">
+            <h3 class="text-center mb-5">Visite Coari</h3>
+          <div class="card card-01">
+          <img class="card-img-top" src="{% static "imagens/coari.jpg" %}" alt="Card image cap">
+          <div class="card-body">
+            <span class="badge-box"><i class="whatsapp fa fa-whatsapp"></i><i class="facebook fa fa-facebook-official"></i></span>
+            <h4 class="card-title">Coari</h4>
+            <p class="card-text">Região rica em gás natural, possui uma cidade economicamente ativa e com um cenário cultural vibrante. </p>
+            <a href="#" class="btn btn-default text-uppercase">Reservar</a>
+          </div>
+        </div>
+        </div>
+	</div>
+</div>
+</div>
+
+</body>
+<div>
+<br>
+<footer>
+    <div class="footerHeader" ></div>
+    <div class="container">
+		<div class="col-md-4" >
+		    <h3><strong>beiraonline.com</strong></h3>
+		    <p>
+		        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+		    </p>
+		</div>
+		
+		<div class="col-md-4 payment">
+		    <h3><strong>Formas de Pagamento</strong></h3>
+		    <div class="col-md-4"><a href="#" ><img src="{% static "imagens/visa-card.png" %}" class="img-thumbnail"></a></div>
+		    <div class="col-md-4"><a href="#" ><img src="{% static "imagens/american-express-3.png" %}" class="img-thumbnail" ></a></div>
+		    <div class="col-md-4"><a href="#" ><img src="{% static "imagens/mastercard-card.png" %}" class="img-thumbnail"  ></a></div>
+		</div>
+		<div class="col-md-4" >
+		    <h3><strong>Contato</strong></h3>
+		    <ul>
+		        <li>Fone : (92) 99252 - 7342</li>
+		        <li>E-mail : beiraonline@beiraonline.com</li>
+		        
+		    </ul>
+		    <p>
+		        
+		    </p>
+		    <ul class="sm">
+		        <li><a href="#" ><img src="https://www.facebook.com/images/fb_icon_325x325.png" class="img-responsive"></a></li>
+		        <li><a href="#" ><img src="https://lh3.googleusercontent.com/00APBMVQh3yraN704gKCeM63KzeQ-zHUi5wK6E9TjRQ26McyqYBt-zy__4i8GXDAfeys=w300" class="img-responsive" ></a></li>
+		        <li><a href="#" ><img src="http://playbookathlete.com/wp-content/uploads/2016/10/twitter-logo-4.png" class="img-responsive"  ></a></li>
+		    </ul>
+		</div>
+    </div>
+</footer>
+
+</div>
+</html>
