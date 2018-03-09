@@ -22,7 +22,7 @@ from django.db.models import Sum
 from datetime import date
 from django.utils.formats import localize
 import locale
-from administrador.models import ManutencaoForm
+from administrador.models import ManutencaoForm, Controle_ArrecadacaoForm
 # Create your views here.
 
 
@@ -85,7 +85,7 @@ def login_view(request):
             return redirect("/administrador/index")
         else:
             return redirect("/administrador/formulario-controle")
-    return render(request, "administrador/login.html", {"form":form, "title":title})
+    return render(request, "administrador/prototipo-login.html", {"form":form, "title":title})
 
 def logout_view(request):
     logout(request)
@@ -114,49 +114,63 @@ def prototipo_manutencao(request):
 
 @login_required(login_url='/login/')
 def controle(request):
-    data_viagem = request.POST.get('data_viagem')
-    passageiros_total = request.POST.get('passageiros-total')
-    passageiros_inteira = request.POST.get('passageiros-inteira')
-    passageiros_meia = request.POST.get('passageiros-meia')
-    receita_alimentacao = request.POST.get('receita-alimentacao')
-    encomendas = request.POST.get('encomendas')
-    cargas = request.POST.get('cargas')
-    outras_receitas = request.POST.get('outras-receitas')
-    barco = Controle_Usuario.objects.select_related('barco').filter(user=request.user)
-    
-    p = ControleForm()
+    barco = Controle_ArrecadacaoForm(barco='barcoex')
+    receita = Controle_ArrecadacaoForm(request.POST, instance=barco)
+    #barco = Controle_Usuario.objects.select_related('barco').filter(user=request.user)
     if request.method=='POST':
-        p = p.clean()
-        print(p)
-        total_receita = int(passageiros_inteira) + int(passageiros_meia)
-        
-        for b in barco:
-            pass
-            
-        controle_arrecadacao = Controle_Arrecadacao(barco=b.barco, 
-                                                    data_viagem=data_viagem,
-                                                    qnt_passagem=passageiros_total,
-                                                    qnt_adulto=passageiros_inteira,
-                                                    qnt_crianca=passageiros_meia,
-                                                    alimentacao=receita_alimentacao,
-                                                    encomendas=encomendas,
-                                                    outros=outras_receitas,
-                                                    total=total_receita)
-
-        controle_arrecadacao.save()
-        controle_receita = Controle_Arrecadacao.objects.select_related('barco').filter(barco=b.barco)
-        for c in controle_receita:
-            pass
-        
-        Controle_Anual.objects.filter(mes=c.data_viagem.month).update(mes=c.data_viagem.month,
-                                                                      receita_total=c.total)
-            
-        
-        return redirect('receita-detail', pk=controle_arrecadacao.pk)
+        print(receita)
+        if receita.is_valid():
+            print("is_valid")
     
-    else:
-        print("controle/else")       
-        return render(request, 'administrador/form-controle.html')
+            return render(request, 'administrador/form-controle.html')
+    
+    return render(request, 'administrador/form-controle.html')
+#===============================================================================
+# def controle(request):
+#     data_viagem = request.POST.get('data_viagem')
+#     passageiros_total = request.POST.get('passageiros-total')
+#     passageiros_inteira = request.POST.get('passageiros-inteira')
+#     passageiros_meia = request.POST.get('passageiros-meia')
+#     receita_alimentacao = request.POST.get('receita-alimentacao')
+#     encomendas = request.POST.get('encomendas')
+#     cargas = request.POST.get('cargas')
+#     outras_receitas = request.POST.get('outras-receitas')
+#     barco = Controle_Usuario.objects.select_related('barco').filter(user=request.user)
+#     
+#     p = ControleForm()
+#     if request.method=='POST':
+#         p = p.clean()
+#         print(p)
+#         total_receita = int(passageiros_inteira) + int(passageiros_meia)
+#         
+#         for b in barco:
+#             pass
+#             
+#         controle_arrecadacao = Controle_Arrecadacao(barco=b.barco, 
+#                                                     data_viagem=data_viagem,
+#                                                     qnt_passagem=passageiros_total,
+#                                                     qnt_adulto=passageiros_inteira,
+#                                                     qnt_crianca=passageiros_meia,
+#                                                     alimentacao=receita_alimentacao,
+#                                                     encomendas=encomendas,
+#                                                     outros=outras_receitas,
+#                                                     total=total_receita)
+# 
+#         controle_arrecadacao.save()
+#         controle_receita = Controle_Arrecadacao.objects.select_related('barco').filter(barco=b.barco)
+#         for c in controle_receita:
+#             pass
+#         
+#         Controle_Anual.objects.filter(mes=c.data_viagem.month).update(mes=c.data_viagem.month,
+#                                                                       receita_total=c.total)
+#             
+#         
+#         return redirect('receita-detail', pk=controle_arrecadacao.pk)
+#     
+#     else:
+#         print("controle/else")       
+#         return render(request, 'administrador/form-controle.html')
+#===============================================================================
 
 
 @login_required(login_url='/login/')
@@ -344,11 +358,8 @@ def form_google(request):
     return render(request, 'administrador/form-google.html')
 
 
-def manutencao_registrar(request):
-    return render(request, 'administrador/manutencao-registrar.html')
-
-def tripulacao_registrar(request):
-    return render(request, 'administrador/tripulacao-registrar.html')
+def prototipo_tripulacao(request):
+    return render(request, 'administrador/form-tripulacao.html')
 
       
 class ChartData(APIView):

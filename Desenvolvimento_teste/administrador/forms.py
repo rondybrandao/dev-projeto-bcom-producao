@@ -46,7 +46,7 @@ class DespesaForm(forms.Form):
 class ControleForm(forms.Form):
     passageiros = forms.CharField()
     def clean(self): 
-        passageiros = self.cleanead_data.get("passageiros-total")
+        passageiros = self.cleaned_data.get("passageiros-total")
         
         if not passageiros:
             raise forms.ValidationError("passageiro incorreto")

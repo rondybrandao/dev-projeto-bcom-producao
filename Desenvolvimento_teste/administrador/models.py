@@ -38,7 +38,7 @@ class Controle_Arrecadacao(models.Model):
     
 class Controle_Despesas(models.Model):
     
-    barco = models.ForeignKey(Controle_Embarcacao)
+    barco = models.ForeignKey(Controle_Embarcacao, null=True, blank=True)
     data_viagem = models.DateField(null=True, blank=True)
     qnt_combustivel = models.IntegerField(null=True, blank=True, default=0)
     preco_combustivel = models.FloatField(blank=True, default=0)
@@ -94,6 +94,15 @@ class Manutencao(models.Model):
     valor = models.FloatField(null=True, blank=True)
     #data = models.DateField(null=True, blank=True)
     
+    
+class Tripulacao(models.Model):
+    nome = models.CharField(max_length=25, null=True, blank=True)
+    sexo = models.CharField(max_length=1, null=True, blank=True)
+    nascimento = models.DateField(null=True, blank=True)
+    cargo = models.CharField(max_length=15, null=True, blank=True)
+    salario = models.FloatField(null=True, blank=True)
+    data_inicio = models.DateField(null=True, blank=True)
+  
 class ManutencaoForm(ModelForm):
     class Meta: 
         model = Manutencao
@@ -101,3 +110,8 @@ class ManutencaoForm(ModelForm):
         widgets = {
             'descricao': Textarea(attrs={'cols': 80, 'rows': 20}),
             }
+        
+class Controle_ArrecadacaoForm(ModelForm):
+    class Meta: 
+        model = Controle_Arrecadacao
+        exclude = ()

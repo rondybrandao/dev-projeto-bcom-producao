@@ -48,7 +48,7 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="{% url 'prototipo' %}">
+          <a class="nav-link" href="manutencao-registrar.html">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
@@ -215,73 +215,77 @@
       <!-- Controle de Viagem-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Controle de Viagem</div>
+          <i class="fa fa-table"></i> Tripulação</div>
         <div class="card-body">
         	<div class="container">
 				<div class="row">
 				    <div class="col-md-8">     
-			            <form class="form-horizontal" method="post">{% csrf_token %} 
-			    			
-			    			<div id="parent" >
-							  <div id="child" >
-							    <h4>Receitas</h4>
-							  </div>
-							</div>
-							
-			    			<div class="row">
-							  <div class="col-md-4"><label>passageiros:</label>
-							  <input type="number" class="form-control" name="qnt_passagem"  placeholder="total passageiros" value="">
-							  </div>
-						
-							  <div class="col-md-4"><label>passagem/inteira:</label>
-							  	<input type="number" class="form-control" name="qnt_adulto"  placeholder="total inteira" value="">
-							  </div>
-							  <div class="col-md-4"><label>passagem/meia:</label>
-							  	<input type="number" class="form-control" name="qnt_crianca" placeholder="total meia" value="">
-							  </div>
-							</div>
-							<br>
-							<div class="row">
-							  <div class="col-md-4">
-							  	<label>alimentaçao:</label>
-							  	<input type="number" class="form-control" name="alimentacao" placeholder="R$:" value="">
-							  </div>
-							  <div class="col-md-4">
-							  	<label>encomendas:</label>
-							  	<input type="number" class="form-control" name="encomendas"  placeholder="R$:" value="">
-							  </div>
-							  <div class="col-md-4">
-							  	<label>cargas:</label>
-							  	<input type="number" class="form-control" name="cargas" id="cargas" placeholder="R$:" value="">
-							  </div>
-							  
-							  <div class="col-md-4">
-							  <br>
-							  	<label>outras receitas:</label>
-							  	<input type="number" class="form-control" name="outros" id="outras-receitas" placeholder="R$:" value="">
-							  </div>
-							  <div class="col-md-4">
-							  <br>
-							  	<label>total:</label>
-							  	<input type="number" class="form-control" name="total" placeholder="R$:" value="">
-							  </div>
-						  	  <div class="col-md-4">
-							  <br>
-							  	<label>data da viagem</label>
-							  	<input type="date" class="form-control" name="data" placeholder="data:" value="">
-							  </div>
-							</div>
-							<br>
-							<div class="col-xs-offset-3 col-xs-10">
-					            <input type="submit" name="submit" value="Registrar" class="btn btn-primary btn-large">
-					        </div>
+			           <form class="form" method="POST">{% csrf_token %}
+			     
+					    			<div class="row" id="p_scents">
+									  						
+									  <div class="col-md-7"><label>Nome:</label>
+									  	<div class="form-group">
+		                                      <input type="text" class="form-control" name="nome" placeholder="nome">
+		                                </div>
+									  </div>
+									  <div class="col-md-4"><label>Data de nascimento:</label>
+									  	<input type="date" class="form-control" name="data" placeholder="data de nascimento:">
+									  </div>
+									  <!--  
+									  <div class="col-md-1"><label>Sexo:</label>
+									  	<div class="form-group">
+		                                      <input type="checkbox" class="form-control" name="masculino" placeholder="M">
+		                                      <input type="checkbox" class="form-control" name="femenino" placeholder="F">
+		                                </div>
+									  </div>-->
+									  <div class="col-md-1"><label>Sexo:</label>
+										  <label class="custom-control custom-checkbox">
+											  <input type="checkbox" class="custom-control-input">
+											  <span class="custom-control-indicator"></span>
+											  <span class="custom-control-description">M</span>
+										  </label>
+										  <label class="custom-control custom-checkbox">
+											  <input type="checkbox" class="custom-control-input">
+											  <span class="custom-control-indicator"></span>
+											  <span class="custom-control-description">F</span>
+										  </label>
+									  </div>
+									  <div class="col-md-3" ><label>Cargo:</label>
+									  		<div class="form-group label-floating" >
+	                                        		<select class="form-control" name="tipo" id="p_scnt">
+														<option value="Escolha"> Escolha </option>
+	                                                	<option value="Comandante"> Comandante </option>
+	                                                	<option value="1º Imediato"> 1º Imediato </option>
+	                                                	<option value="2º Imediato"> 2º Imediato </option>
+	                                                	<option value="Encarregado"> Encarregado </option>
+	                                                                         
+		                                        	</select>
+		                                    	</div>
+									  </div>	
+									  <div class="col-md-4"><label>Salario:</label>
+									  	<input type="number" class="form-control" name="data" placeholder="salario:">
+									  </div>		
+									  <div class="col-md-4"><label>Inicio:</label>
+									  	<input type="date" class="form-control" name="data" placeholder="inicio:">
+									  </div>						  
+									</div>
+									<br>
+									<div id="addScnt">
+										<input type="button" value="adicionar +1" id="add">
+									</div>
+									<br>		
+									<br>
+									<div class="col-xs-offset-3 col-xs-10">
+							            <input type="submit" name="submit" value="Registrar" class="btn btn-primary btn-large">
+							        </div>
 					       </form>
 						</div>
 					 </div>
 				</div>
 		</div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        <div class="card-footer small text-muted">atualização at 11:59 PM</div>
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -289,7 +293,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © Your Website 2017</small>
+          <small>Copyright © Your Website 2018</small>
         </div>
       </div>
     </footer>
@@ -334,12 +338,13 @@
     <!-- Custom scripts for all pages
     <script src="js/sb-admin.min.js"></script>-->
     <script src="{% static 'js/sb-admin.min.js' %}"></script>
-    <!-- Custom scripts for this page
-    <script src="js/sb-admin-datatables.min.js"></script>-->
-    <script src="{% static 'js/sb-admin-datatables.min.js' %}"></script>
-    <!--  <script src="js/sb-admin-charts.min.js"></script>-->
-    <script src="{% static 'js/sb-admin-charts.min.js' %}"></script>
-  </div>
+    
+	<script
+  		src="https://code.jquery.com/jquery-1.6.4.min.js"
+  		integrity="sha256-lR1rrjnrFy9XqIvWhvepIc8GD9IfWWSPDSC2qPmPxaU="
+  		crossorigin="anonymous"></script>
+    <script src="{% static 'js/tripulacao.js' %}"></script>
+  
 </body>
 
 </html>

@@ -29,7 +29,7 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">beiraonline.com</a>
+    <a class="navbar-brand" href="/">beiraonline.com</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -210,21 +210,20 @@
         <li class="breadcrumb-item">
           <a href="#">Painel Principal</a>
         </li>
-        <li class="breadcrumb-item active">Tripulação</li>
+        <li class="breadcrumb-item active">Manutenção</li>
       </ol>
       <!-- Controle de Viagem-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Controle de Viagem</div>
+          <i class="fa fa-table"></i>Manutenção</div>
         <div class="card-body">
         	<div class="container">
 				<div class="row">
-				    <div class="col-md-8">     
+				    <div class="col-md-10">     
 			           <form class="form" method="POST">{% csrf_token %}
-			           		
-								<h2>Manutenção</h2>
+			           
 					    			<div class="row" id="p_scents">
-									  <div class="col-md-4" ><label>Tipo:</label>
+									  <div class="col-md-3" ><label>Tipo:</label>
 									  		<div class="form-group label-floating" >
 	                                        		<select class="form-control" name="tipo" id="p_scnt">
 														<option value="Escolha"> Escolha </option>
@@ -244,9 +243,13 @@
 		                                      <textarea class="form-control" name="descricao" placeholder="descricao" rows="6"></textarea>
 		                                </div>
 									  </div>
-									  <div class="col-md-4"><label>valor:</label>
+									  <div class="col-md-2"><label>valor:</label>
 									  	<input type="number" class="form-control" name="valor" id="valor" placeholder="R$:" value="">
-									  </div>						  
+									  </div>
+									  
+									  <div class="col-md-3"><label>data:</label>
+									  	<input type="date" class="form-control" name="data" id="data" placeholder="" value="">
+									  </div>							  
 									</div>
 									<div id="addScnt">
 										<input type="button" value="adicionar +1" id="add">

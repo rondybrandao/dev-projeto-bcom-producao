@@ -1,4 +1,3 @@
-
 $(function() {
         var scntDiv = $('#p_scents');
         var i = $('#p_scents p').size() + 1;

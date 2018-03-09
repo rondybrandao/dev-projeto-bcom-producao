@@ -26,8 +26,7 @@ urlpatterns = [
     
     #url(r'form-controle', views.controle),
     url(r'formulario-google', views.form_google, name='form-google'),
-    url(r'manutencao-registrar', views.manutencao_registrar, name='manutencao-registrar'),
-    url(r'tripulacao-registrar', views.tripulacao_registrar, name='tripulacao-registrar'),
+    url(r'tripulacao-registrar', views.prototipo_tripulacao, name='tripulacao-registrar'),
     
     url(r'formulario-controle-step', views.controle_step, name='form-controle-step'),
     
