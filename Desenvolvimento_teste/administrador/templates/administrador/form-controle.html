@@ -48,13 +48,13 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="{% url 'prototipo' %}">
+          <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tripulacao-registrar.html">
+          <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
@@ -268,7 +268,7 @@
 						  	  <div class="col-md-4">
 							  <br>
 							  	<label>data da viagem</label>
-							  	<input type="date" class="form-control" name="data" placeholder="data:" value="">
+							  	<input type="date" class="form-control" name="data_viagem" value="">
 							  </div>
 							</div>
 							<br>

@@ -54,7 +54,7 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
@@ -216,53 +216,40 @@
       <div class="col-md-8">
       	<div class="row">
       		<div class="col-md-4">
-      			<label>Barco: {{despesa.barco}}</label>
-      		</div>
-      		<div class="col-md-4">
-      			<label>Data da Viagem:{{despesa.data_viagem}}</label>
-      			
+      			<label>Barco: {{receita.barco}}</label>
       		</div>
       	</div>
-      	<!--  
-      	<h2>Receitas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Passagens:</label> {{receita.qnt_passagem}}</div>
-      		<div class="col-md-4"><label>Passagens/Inteira:</label> {{receita.qnt_adulto}}</div>
-      		<div class="col-md-4"><label>Passagens/Meia:</label> {{receita.qnt_crianca}}</div>
-      	</div>
       	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{receita.alimentacao}}</div>
-      		<div class="col-md-4"><label>Encomendas:</label> R$ {{receita.encomendas}}</div>
-      		<div class="col-md-4"><label>Outras receitas:</label> R$ {{receita.outras_receitas}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Receitas:</strong></label> <strong>R$ {{receita.total}}</strong></div>
-      		
-      	</div>
-      	-->
-      	<h2>Despesas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Quantidade Combustivel:</label>{{despesa.qnt_combustivel}} L </div>
-      		<div class="col-md-4"><label>Preço combustivel:</label> R$ {{despesa.preco_combustivel}} </div>
-      		<div class="col-md-4"><label>Total:</label> R$ {{despesa.total_combustivel}} </div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{despesa.alimentacao}} </div>
-      		<div class="col-md-4"><label>Tripulação:</label> R$ {{despesa.tripulacao}}</div>
-      		<div class="col-md-4"><label>Outras despesas:</label> R$ {{despesa.outros}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Despesas:</strong></label> <strong>R$ {{despesa.total}}</strong></div>
-      		
-      	</div>
-      
+      	<h2>Tripulacao</h2>
+      	<div class="row" id="p_scents">
+									  						
+									  <div class="col-md-7"><label>Nome:</label>
+									  	<div class="form-group">
+		                                      {{tripulacao.nome}}
+		                                </div>
+									  </div>
+									  <div class="col-md-4"><label>Data de nascimento:</label>
+									  	{{tripulacao.nascimento}}
+									  </div>
+									
+									  <div class="col-md-1"><label>Sexo:</label>
+										{{tripulacao.sexo}}
+									  </div>
+									  <div class="col-md-3" ><label>Cargo:</label>
+									  		<div class="form-group label-floating" >
+	                                        		{{tripulacao.cargo}}
+		                                    	</div>
+									  </div>	
+									  <div class="col-md-4"><label>Salario:</label>
+									  	{{tripulacao.salario}}
+									  </div>		
+									  <div class="col-md-4"><label>Inicio:</label>
+									  	{{tripulacao.data_inicio}}
+									  </div>						  
+									</div>
       	<br>
       	<div class="col-xs-offset-3 col-xs-10">
-			<a class="btn btn-primary" href="{% url 'despesa-edit' pk=despesa.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
+			<a class="btn btn-primary" href="{% url 'tripulacao-edit' pk=tripulacao.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
         </div>
       </div>
     </div>

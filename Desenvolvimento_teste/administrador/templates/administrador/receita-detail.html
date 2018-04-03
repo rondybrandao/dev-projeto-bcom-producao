@@ -29,7 +29,7 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">beiraonline.com</a>
+    <a class="navbar-brand" href="/">beiraonline.com</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -48,13 +48,13 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="charts.html">
+          <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
@@ -238,29 +238,10 @@
       	</div>
       	<br>
       	<div class="row">
+      		<div class="col-md-4"><label><strong>Total de Cargas:</strong></label> <strong>R$ {{receita.cargas}}</strong></div>
       		<div class="col-md-4"><label><strong>Total de Receitas:</strong></label> <strong>R$ {{receita.total}}</strong></div>
       		
       	</div>
-      	<!--  
-      	<br>
-      	<h2>Despesas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Quantidade Combustivel:</label> {{receita}}</div>
-      		<div class="col-md-4"><label>Preço combustivel:</label> R$ {{receita}}</div>
-      		<div class="col-md-4"><label>Total:</label> R$ {{receita.despesas_total_combustivel}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{receita.despesas_alimentacao}}</div>
-      		<div class="col-md-4"><label>Tripulação:</label> R$ {{receita.despesas_tripulacao}}</div>
-      		<div class="col-md-4"><label>Outras despesas:</label> R$ {{receita.outras_despesas}}</div>
-      	</div>
-      
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Despesas:</strong></label> <strong>R$ {{receita}}</strong></div>
-      		
-      	</div>
-      	-->
       	<br>
       	<div class="col-xs-offset-3 col-xs-10">
 			<a class="btn btn-primary" href="{% url 'receita-edit' pk=receita.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>

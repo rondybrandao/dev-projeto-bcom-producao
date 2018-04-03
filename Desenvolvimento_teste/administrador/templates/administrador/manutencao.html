@@ -48,7 +48,7 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="manutencao-registrar.html">
+          <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
@@ -229,7 +229,7 @@
 														<option value="Escolha"> Escolha </option>
 	                                                	<option value="Pintura"> Pintura </option>
 	                                                	<option value="Oleo"> Oleo </option>
-	                                                	<option value="Principal"> Maquina Principal </option>
+	                                                	<option value="Principal"> Motor </option>
 	                                                	<option value="Bomba"> Bomba D`agua </option>
 	                                                	<option value="Casco"> Casco </option>
 	                                                	<option value="Eletrico"> Eletrico </option>
@@ -244,20 +244,20 @@
 		                                </div>
 									  </div>
 									  <div class="col-md-2"><label>valor:</label>
-									  	<input type="number" class="form-control" name="valor" id="valor" placeholder="R$:" value="">
+									  	<input type="number" class="form-control" name="valor"  placeholder="R$:" value="">
 									  </div>
 									  
 									  <div class="col-md-3"><label>data:</label>
-									  	<input type="date" class="form-control" name="data" id="data" placeholder="" value="">
+									  	<input type="date" class="form-control" name="data"  placeholder="" value="">
 									  </div>							  
 									</div>
-									<div id="addScnt">
+									<!-- <div id="addScnt">
 										<input type="button" value="adicionar +1" id="add">
-									</div>
+									</div> -->
 									<br>		
 									<br>
 									<div class="col-xs-offset-3 col-xs-10">
-							            <input type="submit" name="submit" value="Registrar" class="btn btn-primary btn-large">
+							            <input type="submit" value="Registrar" class="btn btn-primary btn-large">
 							        </div>
 					       </form>
 						</div>

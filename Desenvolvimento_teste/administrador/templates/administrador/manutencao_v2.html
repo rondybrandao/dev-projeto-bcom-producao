@@ -29,7 +29,7 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="/">beiraonline.com</a>
+    <a class="navbar-brand" href="index.html">beiraonline.com</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -216,53 +216,27 @@
       <div class="col-md-8">
       	<div class="row">
       		<div class="col-md-4">
-      			<label>Barco: {{despesa.barco}}</label>
+      			<label>Barco: {{barco}}</label>
       		</div>
       		<div class="col-md-4">
-      			<label>Data da Viagem:{{despesa.data_viagem}}</label>
+      			<label>Data da manutencao:{{manutencao.data}}</label>
       			
       		</div>
       	</div>
-      	<!--  
-      	<h2>Receitas</h2>
+      	<br>
+      	<h2>Manutencao</h2>
       	<div class="row">
-      		<div class="col-md-4"><label>Passagens:</label> {{receita.qnt_passagem}}</div>
-      		<div class="col-md-4"><label>Passagens/Inteira:</label> {{receita.qnt_adulto}}</div>
-      		<div class="col-md-4"><label>Passagens/Meia:</label> {{receita.qnt_crianca}}</div>
+      		<div class="col-md-4"><label>tipo:</label> {{manutencao.tipo}}</div>
+      		<div class="col-md-4"><label>descricao:</label> {{manutencao.descricao}}</div>
+      		<div class="col-md-4"><label>valor:</label> {{manutencao.valor}}</div>
       	</div>
       	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{receita.alimentacao}}</div>
-      		<div class="col-md-4"><label>Encomendas:</label> R$ {{receita.encomendas}}</div>
-      		<div class="col-md-4"><label>Outras receitas:</label> R$ {{receita.outras_receitas}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Receitas:</strong></label> <strong>R$ {{receita.total}}</strong></div>
-      		
-      	</div>
-      	-->
-      	<h2>Despesas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Quantidade Combustivel:</label>{{despesa.qnt_combustivel}} L </div>
-      		<div class="col-md-4"><label>Preço combustivel:</label> R$ {{despesa.preco_combustivel}} </div>
-      		<div class="col-md-4"><label>Total:</label> R$ {{despesa.total_combustivel}} </div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{despesa.alimentacao}} </div>
-      		<div class="col-md-4"><label>Tripulação:</label> R$ {{despesa.tripulacao}}</div>
-      		<div class="col-md-4"><label>Outras despesas:</label> R$ {{despesa.outros}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Despesas:</strong></label> <strong>R$ {{despesa.total}}</strong></div>
-      		
-      	</div>
-      
+      	
       	<br>
       	<div class="col-xs-offset-3 col-xs-10">
-			<a class="btn btn-primary" href="{% url 'despesa-edit' pk=despesa.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
+      		<a class="btn btn-primary" href="{% url 'manutencao' %}"><span class="fa fa-wrench"></span> Novo</a>
+			<a class="btn btn-primary" href="{% url 'manutencao-edit' pk=manutencao.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
+			
         </div>
       </div>
     </div>

@@ -38,7 +38,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" href="{% url 'form-controle' %}">
             <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Receita</span>
+            <span class="nav-link-text">Registrar Receitas</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
@@ -47,14 +47,14 @@
             <span class="nav-link-text">Registrar Despesas</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="{% url 'manutencao' %}">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
+          <a class="nav-link" href="manutencao-registrar.html">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="tripulacao-registrar.html">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
@@ -208,62 +208,43 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Confirmação</a>
+          <a href="#">Painel Principal</a>
         </li>
-        <li class="breadcrumb-item active"></li>
+        <li class="breadcrumb-item active">Tripulação</li>
       </ol>
       <!-- Controle de Viagem-->
-      <div class="col-md-8">
-      	<div class="row">
-      		<div class="col-md-4">
-      			<label>Barco: {{despesa.barco}}</label>
-      		</div>
-      		<div class="col-md-4">
-      			<label>Data da Viagem:{{despesa.data_viagem}}</label>
-      			
-      		</div>
-      	</div>
-      	<!--  
-      	<h2>Receitas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Passagens:</label> {{receita.qnt_passagem}}</div>
-      		<div class="col-md-4"><label>Passagens/Inteira:</label> {{receita.qnt_adulto}}</div>
-      		<div class="col-md-4"><label>Passagens/Meia:</label> {{receita.qnt_crianca}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{receita.alimentacao}}</div>
-      		<div class="col-md-4"><label>Encomendas:</label> R$ {{receita.encomendas}}</div>
-      		<div class="col-md-4"><label>Outras receitas:</label> R$ {{receita.outras_receitas}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Receitas:</strong></label> <strong>R$ {{receita.total}}</strong></div>
-      		
-      	</div>
-      	-->
-      	<h2>Despesas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Quantidade Combustivel:</label>{{despesa.qnt_combustivel}} L </div>
-      		<div class="col-md-4"><label>Preço combustivel:</label> R$ {{despesa.preco_combustivel}} </div>
-      		<div class="col-md-4"><label>Total:</label> R$ {{despesa.total_combustivel}} </div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{despesa.alimentacao}} </div>
-      		<div class="col-md-4"><label>Tripulação:</label> R$ {{despesa.tripulacao}}</div>
-      		<div class="col-md-4"><label>Outras despesas:</label> R$ {{despesa.outros}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Despesas:</strong></label> <strong>R$ {{despesa.total}}</strong></div>
-      		
-      	</div>
-      
-      	<br>
-      	<div class="col-xs-offset-3 col-xs-10">
-			<a class="btn btn-primary" href="{% url 'despesa-edit' pk=despesa.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Controle de Viagem</div>
+        <div class="card-body">
+        	<div class="container">
+				<div class="row">
+				    <div class="col-md-8">     
+			            <form class="form-horizontal" method="post" name="signup" id="signup" >{% csrf_token %} 
+			    			
+							<h2>Manutencao</h2>
+							<div class="row">
+					      		<div class="col-md-4"><label>tipo:</label> {{form.tipo}}</div>
+					      		<div class="col-md-4"><label>descricao:</label> {{form.descricao}}</div>
+					      		<div class="col-md-4"><label>valor:</label> {{form.valor}}</div>
+					      	</div>
+			        		<br>
+			        		<div class="row">
+							  <div class="col-md-4">
+							  	<label>data:</label>
+							  		{{form.data}}
+							  </div>
+							</div>
+							<br>
+			        		<div class="col-xs-offset-3 col-xs-10">
+					            <input type="submit" name="submit" value="Registrar" class="btn btn-primary btn-large">
+					        </div>
+					    </form>
+					 </div>
+				</div>
+		</div>
         </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
     </div>
     <!-- /.container-fluid-->

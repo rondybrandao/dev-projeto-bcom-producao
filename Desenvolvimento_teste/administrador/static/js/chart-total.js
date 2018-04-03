@@ -7,6 +7,15 @@ $(document).ready(function(){
 	  var receita_mes = [];
 	  var mes = []
 	  var valor = [];
+	  var tipo = [];
+	  var valores_manutencao = [];
+	  var receita
+	  var manutencao
+	  var despesa
+	  var pass_total = []
+	  var pass_inteira = []
+	  var pass_meia = []
+	  
 	  $.ajax({
 		method:"GET",
 		url: endpoint,
@@ -18,6 +27,15 @@ $(document).ready(function(){
 			defaultData = data.default_itens
 			mes = data.meses
 			valor = data.valor
+			tipo = data.tipo
+			valores_manutencao = data.valores_manutencao
+			manutencao = data.manutencao
+			receita = data.receita
+			despesa = data.despesa
+			pass_total = data.pass_total
+			pass_inteira = data.pass_inteira
+			pass_meia = data.pass_meia
+			
 			setChart()
 			console.log(data)
 			console.log(data.customers)
@@ -37,27 +55,22 @@ $(document).ready(function(){
 		        data: {
 		          labels: data_viagem,
 		          datasets: [{
-		              label: 'valores',
-		              data: receita_total,
-		              backgroundColor: [
-		                  'rgba(255, 99, 132, 0.2)',
-		                  'rgba(54, 162, 235, 0.2)',
-		                  'rgba(255, 206, 86, 0.2)',
-		                  'rgba(75, 192, 192, 0.2)',
-		                  'rgba(153, 102, 255, 0.2)',
-		                  'rgba(255, 159, 64, 0.2)'
-		              ],
-		              borderColor: [
-		                  'rgba(255,99,132,1)',
-		                  'rgba(54, 162, 235, 1)',
-		                  'rgba(255, 206, 86, 1)',
-		                  'rgba(75, 192, 192, 1)',
-		                  'rgba(153, 102, 255, 1)',
-		                  'rgba(255, 159, 64, 1)'
-		              ],
+		              label: 'receita', 
+		              data: receita_total, 
+		              backgroundColor: '#007bff',
+		              borderColor: '#007bff',
 		              borderWidth: 1
 		              
-		          }]
+		          },
+		          { label:'despesas',
+		            data: receita_total,
+		            backgroundColor:'rgba(255,225,0,0.5)',
+		            type:'line'},
+		          
+		          { label:'passagens',
+			        data: valor,
+			        backgroundColor:'rgba(0,225,0,0.5)',
+	                type:'line'},]
 		    
 		        },
 		        options: {
@@ -76,7 +89,47 @@ $(document).ready(function(){
 			      }
 		    });
 		    
-		 // -- Bar Chart Example
+		    // -- Line Passagens
+		    var ctx = document.getElementById("myLinePass");
+		    var myChart = new Chart(ctx, {
+		        type: 'line',
+		        data: {
+		          labels: data_viagem,
+		          datasets: [{
+		              label: 'passagens', 
+		              data: pass_total, 
+		              backgroundColor: 'rgba(255, 255, 0, 0.5)',
+		              borderColor: 'rgba(255, 255, 0, 0.5)',
+		              borderWidth: 1   
+		          },
+		          { label:'inteira',
+			            data: pass_inteira,
+			            backgroundColor:'rgba(255,225,0,0.5)',
+			            type:'line'},
+			          
+			          { label:'meia',
+				        data: pass_meia,
+				        backgroundColor:'rgba(0,225,0,0.5)',
+		                type:'line'},
+		                ]
+		        },
+		        options: {
+			          scales: {
+			        	  yAxes: [{
+			        	        ticks: {
+			        	          min: 0,
+			        	          max: 300,
+			        	          maxTicksLimit: 30
+			        	        },
+			        	        gridLines: {
+			        	          color: "rgba(0, 0, 0, .125)",
+			        	        }
+			        	      }],
+			          }
+			      }
+		    });
+		    
+		    // -- Bar Chart Example
 		    var ctx = document.getElementById("myBarChart");
 		    var myLineChart = new Chart(ctx, {
 		      type: 'bar',
@@ -118,19 +171,34 @@ $(document).ready(function(){
 		        }
 		      }
 		    });
+		   
 		    
-		 // -- Pie Chart Example
+		    // -- Pie Receitas
 		    var ctx = document.getElementById("myPieChart");
 		    var myPieChart = new Chart(ctx, {
 		      type: 'pie',
 		      data: {
-		        labels: ["Arrecadação", "Manutenção", "Despesas", "Encomendas"],
+		        labels: ["Receita", "Manutenção", "Despesa"],
 		        datasets: [{
-		          data: [12.21, 15.58, 11.25, 8.32],
-		          backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+		          data: [receita, manutencao, despesa],
+		          backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
+		        }],
+		      },
+		    });
+		    
+		    // -- Pie Manutencao
+		    var ctx = document.getElementById("myPieDespesas");
+		    var myPieChart = new Chart(ctx, {
+		      type: 'pie',
+		      data: {
+		        labels: tipo,
+		        datasets: [{
+		          data: valores_manutencao,
+		          backgroundColor: ['rgba(0,0,0,1)', '#dc3545', '#ffc107', '#28a745','rgba(2,117,216,1)', 'rgba(20,100,200,1)' ],
 		        }],
 		      },
 		    })
+		    
 	  }
 		  
 		  /*var ctx = document.getElementById("myChart").getContext('2d');

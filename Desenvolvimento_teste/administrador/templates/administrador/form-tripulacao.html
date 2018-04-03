@@ -48,13 +48,13 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="manutencao-registrar.html">
+          <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tripulacao-registrar.html">
+          <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
@@ -220,7 +220,7 @@
         	<div class="container">
 				<div class="row">
 				    <div class="col-md-8">     
-			           <form class="form" method="POST">{% csrf_token %}
+			           <form class="form-horizontal" method="POST">{% csrf_token %}
 			     
 					    			<div class="row" id="p_scents">
 									  						
@@ -229,31 +229,29 @@
 		                                      <input type="text" class="form-control" name="nome" placeholder="nome">
 		                                </div>
 									  </div>
+									  
 									  <div class="col-md-4"><label>Data de nascimento:</label>
-									  	<input type="date" class="form-control" name="data" placeholder="data de nascimento:">
-									  </div>
-									  <!--  
-									  <div class="col-md-1"><label>Sexo:</label>
 									  	<div class="form-group">
-		                                      <input type="checkbox" class="form-control" name="masculino" placeholder="M">
-		                                      <input type="checkbox" class="form-control" name="femenino" placeholder="F">
+		                                      <input type="date" class="form-control" name="nascimento">
 		                                </div>
-									  </div>-->
+									  </div>
+									  
+									
 									  <div class="col-md-1"><label>Sexo:</label>
 										  <label class="custom-control custom-checkbox">
-											  <input type="checkbox" class="custom-control-input">
+											  <input type="checkbox" class="custom-control-input" >
 											  <span class="custom-control-indicator"></span>
 											  <span class="custom-control-description">M</span>
 										  </label>
 										  <label class="custom-control custom-checkbox">
-											  <input type="checkbox" class="custom-control-input">
+											  <input type="checkbox" class="custom-control-input" >
 											  <span class="custom-control-indicator"></span>
 											  <span class="custom-control-description">F</span>
 										  </label>
 									  </div>
 									  <div class="col-md-3" ><label>Cargo:</label>
 									  		<div class="form-group label-floating" >
-	                                        		<select class="form-control" name="tipo" id="p_scnt">
+	                                        		<select class="form-control" name="cargo" id="p_scnt">
 														<option value="Escolha"> Escolha </option>
 	                                                	<option value="Comandante"> Comandante </option>
 	                                                	<option value="1º Imediato"> 1º Imediato </option>
@@ -264,17 +262,14 @@
 		                                    	</div>
 									  </div>	
 									  <div class="col-md-4"><label>Salario:</label>
-									  	<input type="number" class="form-control" name="data" placeholder="salario:">
+									  	<input type="number" class="form-control" name="salario" placeholder="salario:">
 									  </div>		
 									  <div class="col-md-4"><label>Inicio:</label>
-									  	<input type="date" class="form-control" name="data" placeholder="inicio:">
+									  	<input type="date" class="form-control" name="data_inicio" placeholder="inicio:">
 									  </div>						  
 									</div>
 									<br>
-									<div id="addScnt">
-										<input type="button" value="adicionar +1" id="add">
-									</div>
-									<br>		
+									
 									<br>
 									<div class="col-xs-offset-3 col-xs-10">
 							            <input type="submit" name="submit" value="Registrar" class="btn btn-primary btn-large">

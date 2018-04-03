@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.dateformat import format
 from django.forms.models import ModelForm
 from django.forms.widgets import Textarea
 
 
 class Controle_Embarcacao(models.Model):
+    user = models.OneToOneField(User, null=True, blank=True)
     nome = models.CharField(max_length=20)
     proprietario = models.CharField(max_length=20)
     
@@ -23,15 +23,16 @@ class Controle_Usuario(models.Model):
         
 class Controle_Arrecadacao(models.Model):
     #user = models.ForeignKey(User)
-    barco = models.ForeignKey(Controle_Embarcacao)
+    barco = models.ForeignKey(Controle_Embarcacao, null=True, blank=True)
     data_viagem = models.DateField(null=True, blank=True)      
     qnt_passagem = models.IntegerField(blank=True, default=0)
     qnt_adulto = models.IntegerField(blank=True, default=0)
     qnt_crianca = models.IntegerField(blank=True, default=0)
-    alimentacao = models.FloatField(null=True, blank=True, default=0)
-    encomendas = models.FloatField(blank=True, default=0)
-    outros = models.FloatField(null=False, blank=True, default=0)   
-    total = models.FloatField(blank=True, default=0)
+    alimentacao = models.FloatField(null=True, blank=True)
+    encomendas = models.FloatField(blank=True)
+    
+    outros = models.FloatField(null=True, blank=True)   
+    total = models.FloatField(blank=True)
     
     def __str__(self):
         return self.barco.__str__()
@@ -40,14 +41,14 @@ class Controle_Despesas(models.Model):
     
     barco = models.ForeignKey(Controle_Embarcacao, null=True, blank=True)
     data_viagem = models.DateField(null=True, blank=True)
-    qnt_combustivel = models.IntegerField(null=True, blank=True, default=0)
+    qnt_combustivel = models.FloatField(null=True, blank=True)
     preco_combustivel = models.FloatField(blank=True, default=0)
     total_combustivel = models.FloatField(blank=True, default=0)
     tripulacao = models.FloatField(null=False, blank=True, default=0)
     alimentacao = models.FloatField(blank=True, default=0)
     outros = models.FloatField(null=False, blank=True, default=0)   
     total = models.FloatField(blank=True, default=0)
-
+    
 
    
 class Controle_Anual(models.Model):
@@ -89,13 +90,15 @@ class Controle_Anual(models.Model):
 
 
 class Manutencao(models.Model):
+    barco = models.ForeignKey(Controle_Embarcacao, null=True, blank=True)
     tipo = models.CharField(max_length=25)
     descricao = models.CharField(max_length=25)
     valor = models.FloatField(null=True, blank=True)
-    #data = models.DateField(null=True, blank=True)
+    data = models.DateField(null=True, blank=True)
     
     
 class Tripulacao(models.Model):
+    barco = models.ForeignKey(Controle_Embarcacao, null=True, blank=True)
     nome = models.CharField(max_length=25, null=True, blank=True)
     sexo = models.CharField(max_length=1, null=True, blank=True)
     nascimento = models.DateField(null=True, blank=True)
@@ -103,15 +106,26 @@ class Tripulacao(models.Model):
     salario = models.FloatField(null=True, blank=True)
     data_inicio = models.DateField(null=True, blank=True)
   
+        
+class Controle_ArrecadacaoForm(ModelForm):
+    class Meta: 
+        model = Controle_Arrecadacao
+        exclude = ()
+        
+class Controle_DespesasForm(ModelForm):
+    class Meta:
+        model = Controle_Despesas
+        exclude = ()
+
 class ManutencaoForm(ModelForm):
     class Meta: 
         model = Manutencao
         exclude = ()
         widgets = {
-            'descricao': Textarea(attrs={'cols': 80, 'rows': 20}),
+            'descricao': Textarea(attrs={'cols': 20, 'rows': 10}),
             }
-        
-class Controle_ArrecadacaoForm(ModelForm):
-    class Meta: 
-        model = Controle_Arrecadacao
+
+class TripulacaoForm(ModelForm):
+    class Meta:
+        model = Tripulacao
         exclude = ()

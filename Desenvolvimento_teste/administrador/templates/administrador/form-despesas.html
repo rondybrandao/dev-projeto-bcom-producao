@@ -48,13 +48,13 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="manutencao-registrar.html">
+          <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tripulacao-registrar.html">
+          <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
@@ -210,7 +210,7 @@
         <li class="breadcrumb-item">
           <a href="#">Painel Principal</a>
         </li>
-        <li class="breadcrumb-item active">Tripulação</li>
+        <li class="breadcrumb-item active">Despesas</li>
       </ol>
       <!-- Controle de Viagem-->
       <div class="card mb-3">
@@ -220,7 +220,7 @@
         	<div class="container">
 				<div class="row">
 				    <div class="col-md-8">     
-			            <form class="form-horizontal" method="post" name="signup" id="signup" >{% csrf_token %} 
+			            <form class="form-horizontal" method="POST" name="signup" id="signup" >{% csrf_token %} 
 			    			
 							<div id="parent">
 							  <div id="child">
@@ -230,15 +230,15 @@
 							<div class="row">
 							  <div class="col-md-4">
 							  	<label>quantidade/combustivel:</label>
-							  	<input type="text" class="form-control" name="qnt-combustivel" id="qnt-combustivel" placeholder="litros:" value="{{form.qnt_combustivel}}">
+							  	<input type="text" class="form-control" name="qnt_combustivel"  placeholder="litros:" value="">
 							  </div>
 							  <div class="col-md-4">
 							  	<label>preço/combustivel:</label>
-							  	<input type="text" class="form-control" name="preco-combustivel" id="preco-combustivel" placeholder="preço por litro:" value="">
+							  	<input type="text" class="form-control" name="preco_combustivel"  placeholder="preço por litro:" value="">
 							  </div>
 							  <div class="col-md-4">
 							  	<label>total/combustivel:</label>
-							  	<input type="text" class="form-control" name="total-combustivel" id="total-combustivel" placeholder="total pago:" value="">
+							  	<input type="text" class="form-control" name="total_combustivel" placeholder="total pago:" value="">
 							  </div>
 							 
 							</div>
@@ -246,15 +246,15 @@
 			        		<div class="row">
 							  <div class="col-md-4">
 							  	<label>alimentação:</label>
-							  	<input type="text" class="form-control" name="despesas-alimentacao" id="despesas-alimentacao" placeholder="R$:" value="">
+							  	<input type="text" class="form-control" name="alimentacao" placeholder="R$:" value="">
 							  </div>
 							  <div class="col-md-4">
 							  	<label>tripulacão:</label>
-							  	<input type="text" class="form-control" name="despesas-tripulacao" id="despesas-tripulacao" placeholder="R$:" value="">
+							  	<input type="text" class="form-control" name="tripulacao"  placeholder="R$:" value="">
 							  </div>
 							  <div class="col-md-4">
 							  	<label>outras despesa:</label>
-							  	<input type="text" class="form-control" name="outras-despesas" id="outras-despesas" placeholder="R$:" value="">
+							  	<input type="text" class="form-control" name="outros"  placeholder="R$:" value="">
 							  </div>
 							  
 							</div>
@@ -339,7 +339,7 @@
     <script src="{% static 'js/sb-admin-datatables.min.js' %}"></script>
     <!--  <script src="js/sb-admin-charts.min.js"></script>-->
     <script src="{% static 'js/sb-admin-charts.min.js' %}"></script>
-  </div>
+ 
 </body>
 
 </html>

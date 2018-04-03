@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Controle_Arrecadacao, Controle_Usuario
+from .models import Controle_Arrecadacao, Controle_Usuario, Manutencao
 from administrador.models import Controle_Embarcacao, Controle_Despesas,\
     Controle_Anual
 
@@ -47,10 +47,19 @@ class ControleAnualAdmin(admin.ModelAdmin):
                     'receita_total',
                     'despesa_total',]
 
+class ManutencaoAdmin(admin.ModelAdmin):
+    list_display = ['pk',
+                    'barco',
+                    'data',
+                    'tipo',
+                    'descricao',
+                    'valor',]
+
     
 admin.site.register(Controle_Embarcacao, EmbarcacaoAdmin)
 admin.site.register(Controle_Usuario, UsuarioAdmin)
 admin.site.register(Controle_Arrecadacao, ArrecadacaoAdmin)
 admin.site.register(Controle_Despesas, DespesasAdmin)
 admin.site.register(Controle_Anual, ControleAnualAdmin)
+admin.site.register(Manutencao, ManutencaoAdmin)
 

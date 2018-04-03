@@ -32,27 +32,27 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
   <!--  <h2 style="margin:0px;"><span class="smallnav menu" onclick="openNav()">☰ beiraonline.com</span></h2>-->
-    <a class="navbar-brand" href="index.html">beiraonline.com</a>
+    <a class="navbar-brand" href="/">beiraonline.com</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{% url 'index' %}">
             <i class="fa fa-fw fa-dashboard"></i>
             <span class="nav-link-text">Painel Principal</span>
           </a>
         </li>
         <!--  
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="{% url 'charts' %}">
+          <a class="nav-link" href="">
             <i class="fa fa-fw fa-area-chart"></i>
             <span class="nav-link-text">Graficos</span>
           </a>
         </li>-->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/administrador/tables.html">
+          <a class="nav-link" href="{% url 'tables-tripulation' %}">
             <i class="fa fa-users"></i>
             <span class="nav-link-text">Tripulação</span>
           </a>
@@ -64,10 +64,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="navbar.html">Despesas</a>
+              <a href="{% url 'manutencao' %}">Detalhes</a>
             </li>
             <li>
-              <a href="cards.html">Relatorios</a>
+              <a href="">Relatorios</a>
             </li>
           </ul>
         </li>
@@ -252,9 +252,9 @@
               <div class="card-body-icon">
                 <i class="fa fa-money"></i>
               </div>
-              <div class="mr-5">Arrecadação/Mês  <h5>R${{total_mes}}</h5></div>
+              <div class="mr-5">Receita /{{mes_corrente}}  <h5>R${{total_mes}}</h5></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'detalhar-receita' %}">
               <span class="float-left">Detalhe</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -268,11 +268,11 @@
               <div class="card-body-icon">
                 <i class="fa fa-users"></i>
               </div>
-              <div class="mr-5">Passageiros/mês
+              <div class="mr-5">Passagens/{{mes_corrente}}
               <h5>{{qnt_passageiros}}</h5>
               </div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'detalhar-passagem' %}">
               <span class="float-left">Detalhe</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -286,9 +286,9 @@
               <div class="card-body-icon">
                 <i class="fa fa-fw fa-shopping-cart"></i>
               </div>
-              <div class="mr-5">Despesas/Mês <h5>R$5.000.00</h5></div>
+              <div class="mr-5">Despesas/{{mes_corrente}} <h5>R${{total_despesas}}</h5></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'detalhar-despesa' %}">
               <span class="float-left">Detalhe</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -302,9 +302,9 @@
               <div class="card-body-icon">
                 <i class="fa fa-wrench"></i>
               </div>
-              <div class="mr-5">Manutenção</div>
+              <div class="mr-5">Manutenção/{{mes_corrente}} <h5>R${{total_manutencao}}</h5></div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="{% url 'detalhar-manutencao' %}">
               <span class="float-left">Detalhe</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>
@@ -316,10 +316,21 @@
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i> Arrecadação por viagem</div>
+          <i class="fa fa-area-chart"></i> Viagens</div>
         <div class="card-body">
           <!--<canvas id="myAreaChart" width="100%" height="30"></canvas>-->
           <canvas id="myChart" width="100%" height="30"></canvas>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+      
+      <!-- Area Chart Passageiros -->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Passagens</div>
+        <div class="card-body">
+          <!--<canvas id="myAreaChart" width="100%" height="30"></canvas>-->
+          <canvas id="myLinePass" width="100%" height="30"></canvas>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
@@ -332,22 +343,32 @@
                 <div class="col-sm-12 my-auto">
                   <canvas id="myBarChart" width="100" height="50"></canvas>
                 </div>
-                
               </div>
             </div>
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
           </div>
       <!-- Example Pie Chart Card-->
-	          <div class="card mb-3 col-md-6">
+      		<div class="row">
+	          <div class="card col-md-5">
 	            <div class="card-header">
-	              <i class="fa fa-pie-chart"></i> Grafico Arrecadação/Viagem</div>
+	              <i class="fa fa-pie-chart"></i> Viagens/Março</div>
 	            <div class="card-body">
 	              <canvas id="myPieChart" width="100%" height="100"></canvas>
 	            </div>
 	            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 	          </div>
 	          
-      
+	          <!-- Example Pie Chart Card-->
+	          <div class="card col-md-5">
+	            <div class="card-header">
+	              <i class="fa fa-pie-chart"></i> Manutenção/Março</div>
+	            <div class="card-body">
+	              <canvas id="myPieDespesas" width="100%" height="100"></canvas>
+	            </div>
+	            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+	          </div>
+	          
+      		</div>
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
