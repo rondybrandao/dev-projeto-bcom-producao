@@ -53,11 +53,23 @@
             <span class="nav-link-text">Registrar Manutenção</span>
           </a>
         </li>
+        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="{% url 'tripulacao' %}">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMultiBeta" data-parent="#exampleAccordion" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Registrar Tripulação</span>
           </a>
+          	<ul class="sidenav-second-level collapse" id="collapseMultiBeta">
+            <li>
+              <a href="#">Novo</a>
+            </li>
+            <li>
+              <a href="#">Editar</a>
+            </li>
+            <li>
+              <a href="#">Pesquisar</a>
+            </li>
+            </ul>
         </li>
         
         
@@ -198,7 +210,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <i class="fa fa-fw fa-sign-out"></i>Sair</a>
         </li>
       </ul>
     </div>
@@ -249,7 +261,9 @@
 									</div>
       	<br>
       	<div class="col-xs-offset-3 col-xs-10">
+      	<a class="btn btn-primary" href="{% url 'tripulacao-list' %}"><span class="fa fa-pencil-square-o"></span> Confirmar</a>
 			<a class="btn btn-primary" href="{% url 'tripulacao-edit' pk=tripulacao.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
+			
         </div>
       </div>
     </div>
@@ -271,19 +285,21 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Selecione "Sair" para sair dessa pagina e voltar para a pagina inicial.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="login.html">Sair</a>
           </div>
         </div>
       </div>
     </div>
+    
+    
     <!-- Bootstrap core JavaScript
     <script src="vendor/jquery/jquery.min.js"></script>-->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

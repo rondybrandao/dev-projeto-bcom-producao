@@ -35,28 +35,44 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-controle' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Receita</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Receita</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="{% url 'form-controle' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'receita-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-despesas' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Despesas</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Despesa</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="{% url 'form-despesas' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'despesa-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
-            <span class="nav-link-text">Registrar Manutenção</span>
+            <span class="nav-link-text">Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="">
+          <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
-            <span class="nav-link-text">Registrar Tripulação</span>
+            <span class="nav-link-text">Tripulação</span>
           </a>
         </li>
         
@@ -198,7 +214,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <i class="fa fa-fw fa-sign-out"></i>Sair</a>
         </li>
       </ul>
     </div>
@@ -223,25 +239,6 @@
       			
       		</div>
       	</div>
-      	<!--  
-      	<h2>Receitas</h2>
-      	<div class="row">
-      		<div class="col-md-4"><label>Passagens:</label> {{receita.qnt_passagem}}</div>
-      		<div class="col-md-4"><label>Passagens/Inteira:</label> {{receita.qnt_adulto}}</div>
-      		<div class="col-md-4"><label>Passagens/Meia:</label> {{receita.qnt_crianca}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label>Alimentação:</label> R$ {{receita.alimentacao}}</div>
-      		<div class="col-md-4"><label>Encomendas:</label> R$ {{receita.encomendas}}</div>
-      		<div class="col-md-4"><label>Outras receitas:</label> R$ {{receita.outras_receitas}}</div>
-      	</div>
-      	<br>
-      	<div class="row">
-      		<div class="col-md-4"><label><strong>Total de Receitas:</strong></label> <strong>R$ {{receita.total}}</strong></div>
-      		
-      	</div>
-      	-->
       	<h2>Despesas</h2>
       	<div class="row">
       		<div class="col-md-4"><label>Quantidade Combustivel:</label>{{despesa.qnt_combustivel}} L </div>
@@ -262,7 +259,10 @@
       
       	<br>
       	<div class="col-xs-offset-3 col-xs-10">
-			<a class="btn btn-primary" href="{% url 'despesa-edit' pk=despesa.pk %}"><span class="fa fa-pencil-square-o"></span> Editar</a>
+			<a class="btn btn-success" href="{% url 'despesa-list' %}"><span class="fa fa-pencil-square-o"></span>Confirmar</a>
+      		<a class="btn btn-warning" href="{% url 'despesa-edit' pk=despesa.pk  %}"><span class="fa fa-pencil-square-o"></span>Editar</a>
+			<a class="btn btn-primary" href="{% url 'form-despesas' %}"><span class="fa fa-pencil-square-o"></span> Novo</a>
+			<a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"><span class="fa fa-pencil-square-o"></span> Deletar</a>
         </div>
       </div>
     </div>
@@ -284,15 +284,33 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Deseja Sair?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Selecione "Sair" para sair dessa pagina e voltar para a pagina inicial.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Sair</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Deseja DELETAR?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Deseja deletar despesa de {{despesa.data_viagem}}?</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'despesa-delete' pk=despesa.pk %}">Delete</a>
           </div>
         </div>
       </div>

@@ -7,14 +7,22 @@ $(document).ready(function(){
 	  var receita_mes = [];
 	  var mes = []
 	  var valor = [];
+	  
 	  var tipo = [];
 	  var valores_manutencao = [];
+	  var dt_manutencao = [];
+	  
 	  var receita
 	  var manutencao
 	  var despesa
+	  var despesa_viagem = []
 	  var pass_total = []
 	  var pass_inteira = []
 	  var pass_meia = []
+	  var jan
+	  var fev
+	  var mar
+	  var abr
 	  
 	  $.ajax({
 		method:"GET",
@@ -22,19 +30,31 @@ $(document).ready(function(){
 		success: function(data){
 			labels = data.labels
 			data_viagem = data.viagem_data
+			
 			receita_total = data.receita_total
+			despesa_viagem = data.despesa_viagem
+			
 			receita_mes = data.receita_mes
 			defaultData = data.default_itens
 			mes = data.meses
 			valor = data.valor
+			
 			tipo = data.tipo
 			valores_manutencao = data.valores_manutencao
+			dt_manutencao = data.dt_manutencao
+			
 			manutencao = data.manutencao
 			receita = data.receita
 			despesa = data.despesa
+			
 			pass_total = data.pass_total
 			pass_inteira = data.pass_inteira
 			pass_meia = data.pass_meia
+			
+			jan = data.jan
+			fev = data.fev
+			mar = data.mar
+			abr = data.abr
 			
 			setChart()
 			console.log(data)
@@ -57,20 +77,15 @@ $(document).ready(function(){
 		          datasets: [{
 		              label: 'receita', 
 		              data: receita_total, 
-		              backgroundColor: '#007bff',
-		              borderColor: '#007bff',
-		              borderWidth: 1
+		              borderColor: 'rgba(0,0,255)',
+		              borderWidth: 2
 		              
 		          },
-		          { label:'despesas',
-		            data: receita_total,
-		            backgroundColor:'rgba(255,225,0,0.5)',
+		          { label:'despesa',
+		            data: despesa_viagem,
+		            backgroundColor:'rgba(255,225,0)',
 		            type:'line'},
-		          
-		          { label:'passagens',
-			        data: valor,
-			        backgroundColor:'rgba(0,225,0,0.5)',
-	                type:'line'},]
+		          ]
 		    
 		        },
 		        options: {
@@ -98,18 +113,20 @@ $(document).ready(function(){
 		          datasets: [{
 		              label: 'passagens', 
 		              data: pass_total, 
-		              backgroundColor: 'rgba(255, 255, 0, 0.5)',
-		              borderColor: 'rgba(255, 255, 0, 0.5)',
-		              borderWidth: 1   
+		              
+		              borderColor: 'rgba(0, 0, 255)',
+		              borderWidth: 2   
 		          },
 		          { label:'inteira',
 			            data: pass_inteira,
-			            backgroundColor:'rgba(255,225,0,0.5)',
+			            backgroundColor:'rgba(100,50,50,0.5)',
+			            borderColor: 'rgba(100,50,50)',
 			            type:'line'},
 			          
 			          { label:'meia',
 				        data: pass_meia,
-				        backgroundColor:'rgba(0,225,0,0.5)',
+				        backgroundColor:'rgba(0,255,0,0.5)',
+				        borderColor: 'rgba(0, 255, 0)',
 		                type:'line'},
 		                ]
 		        },
@@ -129,6 +146,36 @@ $(document).ready(function(){
 			      }
 		    });
 		    
+		    // --- Line manutencao
+		    var ctx = document.getElementById("myChartManutencao");
+		    var myChart = new Chart(ctx, {
+		        type: 'line',
+		        data: {
+		          labels: dt_manutencao,
+		          datasets: [{
+		              label: 'manutencao', 
+		              data: valores_manutencao,
+		              backgroundColor: "rgba(255,0,0,0.5)",
+		              borderColor: 'rgba(255,0,0)',
+		              borderWidth: 1
+		          }],
+		        },
+		        options: {
+			          scales: {
+			        	  yAxes: [{
+			        	        ticks: {
+			        	          min: 0,
+			        	          max: 5000,
+			        	          maxTicksLimit: 15
+			        	        },
+			        	        gridLines: {
+			        	          color: "rgba(0, 0, 0, .125)",
+			        	        }
+			        	      }],
+			          }
+			      }
+		    });
+		    
 		    // -- Bar Chart Example
 		    var ctx = document.getElementById("myBarChart");
 		    var myLineChart = new Chart(ctx, {
@@ -136,11 +183,16 @@ $(document).ready(function(){
 		      data: {
 		        labels: ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET","OUT", "NOV", "DEZ"],
 		        datasets: [{
-		          label: "Valores",
+		          label: "receita",
 		          backgroundColor: "rgba(2,117,216,1)",
 		          borderColor: "rgba(2,117,216,1)",
 		          data: valor,
-		        }],
+		        },
+		        { label: "despesa",
+			      backgroundColor: "#ffc107",
+	              borderColor: "#ffc107",
+	              data: [jan, fev, mar, abr],
+		          }],
 		      },
 		      options: {
 		        scales: {
@@ -158,8 +210,8 @@ $(document).ready(function(){
 		          yAxes: [{
 		            ticks: {
 		              min: 0,
-		              max: 30000,
-		              maxTicksLimit: 5
+		              max: 25000,
+		              maxTicksLimit: 10
 		            },
 		            gridLines: {
 		              display: true

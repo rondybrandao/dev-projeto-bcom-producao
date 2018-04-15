@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Controle_Arrecadacao, Controle_Usuario, Manutencao
 from administrador.models import Controle_Embarcacao, Controle_Despesas,\
-    Controle_Anual
+    Controle_Anual, Tripulacao
 
 class EmbarcacaoAdmin(admin.ModelAdmin):
     list_display = ['pk',
@@ -54,6 +54,16 @@ class ManutencaoAdmin(admin.ModelAdmin):
                     'tipo',
                     'descricao',
                     'valor',]
+    
+class TripulacaoAdmin(admin.ModelAdmin):
+    list_display = ['pk',
+                    'barco',
+                    'nome',
+                    'sexo',
+                    'nascimento',
+                    'cargo',
+                    'salario',
+                    'data_inicio',]
 
     
 admin.site.register(Controle_Embarcacao, EmbarcacaoAdmin)
@@ -62,4 +72,5 @@ admin.site.register(Controle_Arrecadacao, ArrecadacaoAdmin)
 admin.site.register(Controle_Despesas, DespesasAdmin)
 admin.site.register(Controle_Anual, ControleAnualAdmin)
 admin.site.register(Manutencao, ManutencaoAdmin)
+admin.site.register(Tripulacao, TripulacaoAdmin)
 

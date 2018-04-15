@@ -35,68 +35,62 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-controle' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Receitas</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Receita</span>
           </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-despesas' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Despesas</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="{% url 'manutencao' %}">
-            <i class="fa fa-wrench"></i>
-            <span class="nav-link-text">Registrar Manutenção</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tripulacao-registrar.html">
-            <i class="fa fa-user-plus"></i>
-            <span class="nav-link-text">Registrar Tripulação</span>
-          </a>
-        </li>
-        
-        
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">Pontuação</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="{% url 'form-controle' %}">Novo</a>
             </li>
             <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-              <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-                <li>
-                  <a href="#">Third Level Item</a>
-                </li>
-              </ul>
+              <a href="{% url 'receita-list' %}">Lista</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">Link</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Despesa</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="{% url 'form-despesas' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'despesa-list' %}">Lista</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Manutencao</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="{% url 'manutencao' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'manutencao-list' %}">Lista</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMultiBeta" data-parent="#exampleAccordion" href="{% url 'tripulacao' %}">
+            <i class="fa fa-user-plus"></i>
+            <span class="nav-link-text">Tripulação</span>
+          </a>
+          	<ul class="sidenav-second-level collapse" id="collapseMultiBeta">
+            <li>
+              <a href="{% url 'tripulacao' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'tripulacao-list' %}">Lista</a>
+            </li>
+       
+            </ul>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -198,7 +192,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <i class="fa fa-fw fa-sign-out"></i>Sair</a>
         </li>
       </ul>
     </div>
@@ -286,15 +280,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Deseja Sair?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Selecione "Logout" se voce tem certeza de que quer sair da sua conta.</div>
+          <div class="modal-body">Selecione "Sair" para sair dessa pagina e voltar para a pagina inicial.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Sair</a>
           </div>
         </div>
       </div>

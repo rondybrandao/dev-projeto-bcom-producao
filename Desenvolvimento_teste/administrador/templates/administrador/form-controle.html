@@ -35,33 +35,57 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-controle' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Receitas</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Receita</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="{% url 'form-controle' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'receita-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-despesas' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Despesas</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Despesa</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="{% url 'form-despesas' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'despesa-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
-          <a class="nav-link" href="{% url 'manutencao' %}">
-            <i class="fa fa-wrench"></i>
-            <span class="nav-link-text">Registrar Manutenção</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents3" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Manutencao</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents3">
+            <li>
+              <a href="{% url 'manutencao' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'manutencao-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
-            <span class="nav-link-text">Registrar Tripulação</span>
+            <span class="nav-link-text">Tripulação</span>
           </a>
         </li>
         
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
             <span class="nav-link-text">Pontuação</span>
@@ -91,13 +115,13 @@
               </ul>
             </li>
           </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
+        </li> -->
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-link"></i>
             <span class="nav-link-text">Link</span>
           </a>
-        </li>
+        </li> -->
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -198,7 +222,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <i class="fa fa-fw fa-sign-out"></i>Sair</a>
         </li>
       </ul>
     </div>
@@ -208,25 +232,22 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Painel Principal</a>
+          <a href="#">Receita</a>
         </li>
-        <li class="breadcrumb-item active">Tripulação</li>
+        <li class="breadcrumb-item active">Formulario</li>
       </ol>
       <!-- Controle de Viagem-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Controle de Viagem</div>
+          <i class="fa fa-table"></i> Controle de Receitas</div>
         <div class="card-body">
         	<div class="container">
 				<div class="row">
 				    <div class="col-md-8">     
 			            <form class="form-horizontal" method="post">{% csrf_token %} 
-			    			
-			    			<div id="parent" >
-							  <div id="child" >
-							    <h4>Receitas</h4>
-							  </div>
-							</div>
+			    			{{ receita.non_field_errors }}
+			    			{{ receita.data_viagem.errors }}
+			    		
 							
 			    			<div class="row">
 							  <div class="col-md-4"><label>passageiros:</label>
@@ -274,6 +295,8 @@
 							<br>
 							<div class="col-xs-offset-3 col-xs-10">
 					            <input type="submit" name="submit" value="Registrar" class="btn btn-primary btn-large">
+					            <a class="btn btn-primary" data-toggle="modal" data-target="#confirmacaoModal" href="{% url 'receita-detail' pk=1  %}">
+            						<i class="fa fa-fw fa-sign-in"></i>OK</a>
 					        </div>
 					       </form>
 						</div>
@@ -302,15 +325,71 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Deseja Sair?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Selecione "Logout" se voce tem certeza de que quer sair da sua conta.</div>
+          <div class="modal-body">Selecione "Sair" se voce tem certeza de que quer sair dessa pagina.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Sair</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="confirmacaoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmacao</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form class="form-horizontal" method="post">{% csrf_token %} 
+		      	<div class="row">
+		      		<div class="col-md-4">
+		      			<label>Barco: {{receita.barco}}</label>
+		      		</div>
+		      		<div class="col-md-4">
+		      			<label>Data da Viagem:{{data_viagem}}</label>
+		      			
+		      		</div>
+		      	</div>
+		      	<br>
+		      	<h2>Receitas</h2>
+		      	<div class="row">
+		      		<div class="col-md-4"><label>Passagens:</label> {{receita.qnt_passagem.values}}</div>
+		      		<div class="col-md-4"><label>Passagens/Inteira:</label> {{receita.qnt_adulto}}</div>
+		      		<div class="col-md-4"><label>Passagens/Meia:</label> {{receita.qnt_crianca}}</div>
+		      	</div>
+		      	<br>
+		      	<div class="row">
+		      		<div class="col-md-4"><label>Alimentação:</label> R$ {{receita.alimentacao}}</div>
+		      		<div class="col-md-4"><label>Encomendas:</label> R$ {{receita.encomendas}}</div>
+		      		<div class="col-md-4"><label>Outras receitas:</label> R$ {{receita.outros}}</div>
+		      	</div>
+		      	<br>
+		      	<div class="row">
+		      		<div class="col-md-4"><label><strong>Total de Cargas:</strong></label> <strong>R$ {{receita.cargas}}</strong></div>
+		      		<div class="col-md-4"><label><strong>Total de Receitas:</strong></label> <strong>R$ {{receita.total}}</strong></div>
+		      		
+		      	</div>
+		      	<br>
+		      	<div class="col-xs-offset-3 col-xs-10">
+		      		
+		      		<input type="submit" name="submit" value="Confirmar" class="btn btn-primary btn-large">
+		      		<a class="btn btn-primary" href="{% url 'receita-confirmacao'   %}"><span class="fa fa-pencil-square-o"></span> OK</a>
+					
+		        </div>
+        	</form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'receita-confirmacao' %}">Confirmar</a>
           </div>
         </div>
       </div>

@@ -35,33 +35,49 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-controle' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Receitas</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Receita</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="{% url 'form-controle' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'receita-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="{% url 'form-despesas' %}">
-            <i class="fa fa-ship"></i>
-            <span class="nav-link-text">Registrar Despesas</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Despesa</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents2">
+            <li>
+              <a href="{% url 'form-despesas' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'despesa-list' %}">Lista</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Registrar">
           <a class="nav-link" href="{% url 'manutencao' %}">
             <i class="fa fa-wrench"></i>
-            <span class="nav-link-text">Registrar Manutenção</span>
+            <span class="nav-link-text">Manutenção</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
-            <span class="nav-link-text">Registrar Tripulação</span>
+            <span class="nav-link-text">Tripulação</span>
           </a>
         </li>
         
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
             <span class="nav-link-text">Pontuação</span>
@@ -97,7 +113,7 @@
             <i class="fa fa-fw fa-link"></i>
             <span class="nav-link-text">Link</span>
           </a>
-        </li>
+        </li> -->
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -151,7 +167,7 @@
               <i class="fa fa-fw fa-circle"></i>
             </span>
           </a>
-          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+          <!-- <div class="dropdown-menu" aria-labelledby="alertsDropdown">
             <h6 class="dropdown-header">New Alerts:</h6>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
@@ -182,9 +198,9 @@
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item small" href="#">View all alerts</a>
-          </div>
+          </div> -->
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <form class="form-inline my-2 my-lg-0 mr-lg-2">
             <div class="input-group">
               <input class="form-control" type="text" placeholder="Search for...">
@@ -195,10 +211,10 @@
               </span>
             </div>
           </form>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            <i class="fa fa-fw fa-sign-out"></i>Sair</a>
         </li>
       </ul>
     </div>
@@ -208,25 +224,22 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Painel Principal</a>
+          <a href="#">Despesas</a>
         </li>
-        <li class="breadcrumb-item active">Despesas</li>
+        <li class="breadcrumb-item active">Novo</li>
       </ol>
       <!-- Controle de Viagem-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Controle de Viagem</div>
+          <i class="fa fa-table"></i> Controle de Despesas</div>
         <div class="card-body">
         	<div class="container">
 				<div class="row">
 				    <div class="col-md-8">     
 			            <form class="form-horizontal" method="POST" name="signup" id="signup" >{% csrf_token %} 
-			    			
-							<div id="parent">
-							  <div id="child">
-							    <h4>Despesas</h4>
-							  </div>
-							</div>
+			    			{{ despesas.field_errors }}
+			    			{{ despesas.data_viagem.errors }}
+							
 							<div class="row">
 							  <div class="col-md-4">
 							  	<label>quantidade/combustivel:</label>
@@ -302,15 +315,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Deseja Sair?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">Selecione "Sair" para sair dessa pagina e voltar para a pagina inicial ou "Cancelar" para permanecer.</div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Sair</a>
           </div>
         </div>
       </div>

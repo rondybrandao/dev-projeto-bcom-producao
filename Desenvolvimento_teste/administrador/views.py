@@ -11,7 +11,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-
+from django.template                import RequestContext
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -22,6 +22,7 @@ from administrador.models import ManutencaoForm, Controle_ArrecadacaoForm, Contr
 from django.utils.timezone import now
 from _datetime import date
 from ctypes.wintypes import PINT
+from django.template.context_processors import request
 # Create your views here.
 
 
@@ -33,13 +34,12 @@ def index(request):
     total_manutencao = []
     inicio = datetime.date(2018, 3, 1)
     fim = datetime.date(2018, 3, 31)
-    Meses=('janeiro','fevereiro','Marco','abril','maio','junho',
+    Meses=('janeiro','fevereiro','marco','abril','maio','junho',
           'julho','agosto','setembro','outubro','novembro','dezembro')
     
     agora = now()
     mes = (agora.month)
     mes_corrente = Meses[mes-1] 
-    
     
     controle_usuario = Controle_Usuario.objects.select_related('user').filter(user=request.user)
     for c in controle_usuario:
@@ -60,15 +60,12 @@ def index(request):
     
     locale.setlocale(locale.LC_ALL, '')
     
-    #calculo da receita
     total_receita = sum(total)
     total_receita = locale.format('%.2f', total_receita, True)
-    
-    #calculo da despesa
+        
     total_despesas = sum(total_despesas) 
     total_despesas = locale.format('%.2f', total_despesas, True) 
-    
-    #calculo da manutencao
+
     total_manutencao = sum(total_manutencao)
     total_manutencao = locale.format('%.2f', total_manutencao, True) 
     
@@ -84,6 +81,7 @@ def login_view(request):
     title = "login"
     #next = request.GET.get('next')
     form = UserLoginForm(request.POST or None)
+    print(form)
     if form.is_valid():
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
@@ -93,14 +91,16 @@ def login_view(request):
         #    return redirect(next)
         #print(user.get_group_permissions())
         if user.has_perm("auth.change_permission"):
-            return redirect("/administrador/index")
+            print(user.has_perm("auth.change_permission"))
+            return redirect("index")
         else:
-            return redirect("/administrador/formulario-controle")
-    return render(request, "administrador/prototipo-login.html", {"form":form, "title":title})
+            return redirect('form-controle')
+        
+    return render(request, "administrador/prototipo-login.html", {"title":title, "form":form})
 
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('/')
     
 def controle_step(request):
     return render(request, "administrador/form-controle-step.html")
@@ -138,6 +138,34 @@ def manutencao_edit(request, pk):
     return render(request, 'administrador/manutencao-edit.html', {'manutencao':manutencao,
                                                                   'form':form})
 
+def manutencao_descricao(request, pk):
+    print('manutencao descricao')
+    manutencao = get_object_or_404(Manutencao, pk=pk)
+    print(manutencao.pk)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/manutencao-item-descricao.html', {'manutencao':manutencao})
+
+def manutencao_item(request, pk):
+    print('manutencao descricao')
+    manutencao = get_object_or_404(Manutencao, pk=pk)
+    print(manutencao.pk)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/manutencao-item.html', {'manutencao':manutencao})
+
+def manutencao_list(request):
+    print('list_manutencao')
+    manutencao = Manutencao.objects.select_related('barco')
+    print(manutencao)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/manutencao-list.html', {'manutencao':manutencao})
+
+def manutencao_delete(request, pk):
+    manutencao = get_object_or_404(Manutencao, pk=pk)
+    manutencao.delete()
+    return redirect('manutencao-list')
 
 def tripulacao(request):
     if request.method=='POST':
@@ -170,70 +198,58 @@ def tripulacao_edit(request, pk):
     return render(request, 'administrador/tripulacao-edit.html', {'tripulacao':tripulacao,
                                                                   'form':form})
 
+def tripulacao_descricao(request, pk):
+    print('tripulacao descricao')
+    tripulacao = get_object_or_404(Tripulacao, pk=pk)
+    print(tripulacao.pk)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/tripulacao-item-descricao.html', {'tripulacao':tripulacao
+                                                                            })
+def tripulacao_delete(request, pk):
+    tripulacao = get_object_or_404(Tripulacao, pk=pk)
+    tripulacao.delete()
+    return redirect('tripulacao-list')
+
+def tripulacao_list(request):
+    print('list_tripulacao')
+    tripulacao = Tripulacao.objects.select_related('barco')
+    print(tripulacao)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/tripulacao-list.html', {'tripulacao':tripulacao})
+
+
 @login_required(login_url='/login/')
 def controle(request):
-
+    receita = Controle_ArrecadacaoForm(request.POST)
+    data_viagem = request.POST.get('data_viagem')
+    print(data_viagem)
+    print(receita)
+    barco = Controle_Embarcacao.objects.get(user=request.user)
     if request.method=='POST':
-        #barco = Controle_Usuario.objects.select_related('barco').filter(user=request.user)
-        barco = Controle_Embarcacao.objects.get(user=request.user)        
-        receita = Controle_ArrecadacaoForm(request.POST)
+        #barco = Controle_Usuario.objects.select_related('barco').filter(user=request.user)  
+        
         print(receita)
         if receita.is_valid():
             print("is_valid")
             new_receita = receita.save(commit=False)
             new_receita.barco = barco
             new_receita.save()
+        
             return redirect('receita-detail', pk=new_receita.pk)
+            
+            
+    return render(request, 'administrador/form-controle.html', {'receita':receita, 'data_viagem':data_viagem})
+
+def receita_confirmacao(request):
+    print("receita_confirmacao")
+    receita = Controle_ArrecadacaoForm(request.POST)
+    print(receita)
+    print(request.POST.get('total') )
     
-    return render(request, 'administrador/form-controle.html')
-#===============================================================================
-# def controle(request):
-#     data_viagem = request.POST.get('data_viagem')
-#     passageiros_total = request.POST.get('passageiros-total')
-#     passageiros_inteira = request.POST.get('passageiros-inteira')
-#     passageiros_meia = request.POST.get('passageiros-meia')
-#     receita_alimentacao = request.POST.get('receita-alimentacao')
-#     encomendas = request.POST.get('encomendas')
-#     cargas = request.POST.get('cargas')
-#     outras_receitas = request.POST.get('outras-receitas')
-#     barco = Controle_Usuario.objects.select_related('barco').filter(user=request.user)
-#     
-#     p = ControleForm()
-#     if request.method=='POST':
-#         p = p.clean()
-#         print(p)
-#         total_receita = int(passageiros_inteira) + int(passageiros_meia)
-#         
-#         for b in barco:
-#             pass
-#             
-#         controle_arrecadacao = Controle_Arrecadacao(barco=b.barco, 
-#                                                     data_viagem=data_viagem,
-#                                                     qnt_passagem=passageiros_total,
-#                                                     qnt_adulto=passageiros_inteira,
-#                                                     qnt_crianca=passageiros_meia,
-#                                                     alimentacao=receita_alimentacao,
-#                                                     encomendas=encomendas,
-#                                                     outros=outras_receitas,
-#                                                     total=total_receita)
-# 
-#         controle_arrecadacao.save()
-#         controle_receita = Controle_Arrecadacao.objects.select_related('barco').filter(barco=b.barco)
-#         for c in controle_receita:
-#             pass
-#         
-#         Controle_Anual.objects.filter(mes=c.data_viagem.month).update(mes=c.data_viagem.month,
-#                                                                       receita_total=c.total)
-#             
-#         
-#         return redirect('receita-detail', pk=controle_arrecadacao.pk)
-#     
-#     else:
-#         print("controle/else")       
-#         return render(request, 'administrador/form-controle.html')
-#===============================================================================
-
-
+    return render(request, 'administrador/receita-list.html')
+    
 @login_required(login_url='/login/')
 def receita_detail(request, pk):
     receita = get_object_or_404(Controle_Arrecadacao, pk=pk)
@@ -289,6 +305,19 @@ def receita_edit(request, pk):
     return render(request, 'administrador/receita-edit.html', {'receita':receita,
                                                                'form':form}) 
 
+def receita_list(request):
+    print('list_receita')
+    receitas = Controle_Arrecadacao.objects.select_related('barco')
+    print(receitas)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/receita-list.html', {'receitas':receitas})
+ 
+def receita_delete(request, pk):
+    receita = get_object_or_404(Controle_Arrecadacao, pk=pk)
+    receita.delete()
+    return redirect('receita-list')
+   
 @login_required(login_url='/login/')
 def controle_despesas(request):
     if request.method=='POST':
@@ -301,6 +330,9 @@ def controle_despesas(request):
             new_despesas.save()
             
             return redirect('despesa-detail', pk=new_despesas.pk)
+        else:
+            print('despesas/else')
+            return render(request, 'administrador/form-despesas.html', {'despesas':despesas})
     
     return render(request, 'administrador/form-despesas.html')
 
@@ -353,6 +385,18 @@ def despesa_edit(request, pk):
     return render(request, 'administrador/despesa-edit.html', {'despesa':despesa,
                                                                'form':form})    
     
+def despesa_list(request):
+    print('list_despesa')
+    despesas = Controle_Despesas.objects.select_related('barco')
+    print(despesas)
+    #barco = Controle_Embarcacao.objects.get(user=request.user)
+    
+    return render(request, 'administrador/despesa-list.html', {'despesas':despesas})
+
+def despesa_delete(request, pk):
+    despesa = get_object_or_404(Controle_Despesas, pk=pk)
+    despesa.delete()
+    return redirect('despesa-list')
 
 def confirmacao_controle(request, pk_receita, pk_despesa):
     
@@ -395,7 +439,7 @@ def detalhar_receita_admin(request):
     total_passageiros = sum(total_passageiros)
     
     for d in despesas:
-        total_despesa.append(d)
+        total_despesa.append(d.total)
     total_despesa = sum(total_despesa)
        
     for m in manutencao:
@@ -431,7 +475,7 @@ def detalhar_passagem_admin(request):
     total_passageiros = sum(total_passageiros)
     
     for d in despesas:
-        total_despesa.append(d)
+        total_despesa.append(d.total)
     total_despesa = sum(total_despesa)
        
     for m in manutencao:
@@ -467,7 +511,7 @@ def detalhar_despesas_admin(request):
     total_passageiros = sum(total_passageiros)
     
     for d in despesas:
-        total_despesa.append(d)
+        total_despesa.append(d.total)
     total_despesa = sum(total_despesa)
        
     for m in manutencao:
@@ -504,7 +548,7 @@ def detalhar_manutencoes_admin(request):
     total_passageiros = sum(total_passageiros)
     
     for d in despesas:
-        total_despesa.append(d)
+        total_despesa.append(d.total)
     total_despesa = sum(total_despesa)
        
     for m in manutencao:
@@ -518,6 +562,9 @@ def detalhar_manutencoes_admin(request):
                                                                           'total_despesa':total_despesa,
                                                                           'total_passageiros':total_passageiros})
 
+def bug(request):
+    return render(request, 'administrador/bug.html')
+    
 def tables_tripulation(request):
     print('admin_tripulacao')
     tripulation = Tripulacao.objects.select_related('barco')
@@ -554,6 +601,7 @@ class ChartLineData(APIView):
         data_viagem = []
         receita_total = []
         despesa_total = []
+        despesa_viagem = []
         receita_mes = []
         passagens_total = []
         passagens_inteira = []
@@ -563,6 +611,9 @@ class ChartLineData(APIView):
         mes = []
         valor = []
         c = {}
+        dic_despesa = {}
+        dic_manutencao = {}
+        dt_manutencao = []
         tipo_total = {}
         
         agora = now()
@@ -571,35 +622,60 @@ class ChartLineData(APIView):
         ca = Controle_Arrecadacao.objects.select_related('barco').filter(data_viagem__month=mes_hj)
         despesas_total = Controle_Despesas.objects.select_related('barco').filter(data_viagem__month=mes_hj)
         manutencao = Manutencao.objects.select_related('barco').filter(data__month=mes_hj)
-      
-        #manutençao
+        
+        
         for m in manutencao:
+            dt_manutencao.append(m.data)
             if m.tipo not in tipo_total:
                 tipo_total[m.tipo] = m.valor
             else:
                 tipo_total[m.tipo] = tipo_total[m.tipo] + m.valor
-            
+        
+        print(dt_manutencao)
         manutencao_total =  sum(tipo_total.values())
         
-        #Despesas
         for des in despesas_total:
             despesa_total.append(des.total)
+            dic_despesa[des.data_viagem]=des.total
         
+        for s in sorted(dic_despesa.items()):
+            despesa_viagem.append(s[1])
+            
         despesas = sum(despesa_total)
         
-        #Controle_arrecadacao
         for d in ca:
             c[d.data_viagem]=d.total
             passagens_total.append(d.qnt_passagem)
             passagens_inteira.append(d.qnt_adulto)
             passagens_meia.append(d.qnt_crianca)
-        print("inteira",passagens_inteira)  
-        print("meia",passagens_meia) 
+        
         for s in sorted(c.items()):
             data_viagem.append(s[0])
             receita_total.append(s[1])
-        
+            
         receita = sum(receita_total)
+        
+        despesa = Controle_Despesas.objects.select_related('barco')
+        janeiro = []
+        fevereiro = []
+        marco =[]
+        abril = []
+        
+        for d in despesa:
+            if d.data_viagem.month == 1:
+                janeiro.append(d.total)
+            if d.data_viagem.month == 2:
+                fevereiro.append(d.total)
+            if d.data_viagem.month == 3:
+                marco.append(d.total)
+            if d.data_viagem.month == 4:
+                abril.append(d.total)
+                
+        janeiro = sum(janeiro)
+        fevereiro = sum(fevereiro)
+        marco = sum(marco)
+        abril = sum(abril)
+        
         mes_total =  Controle_Anual.objects.select_related('barco')
         for m in mes_total:
             dic[int(m.mes)] = m.receita_total
@@ -610,20 +686,29 @@ class ChartLineData(APIView):
         for k, v in list_mes:
             mes.append(k)
             valor.append(v)
-        
+    
         data = {      
             "viagem_data": data_viagem,
             "receita_total":receita_total,
             "receita_mes":receita_mes,
             "valor":valor,
+            
             "tipo":tipo_total.keys(),
             "valores_manutencao":tipo_total.values(),
+            "dt_manutencao":dt_manutencao,
+            
             "manutencao":manutencao_total,
             "despesa":despesas,
+            "despesa_viagem":despesa_viagem,
             "receita":receita,
+            
             "pass_total":passagens_total,
             "pass_inteira":passagens_inteira,
-            "pass_meia":passagens_meia
-                    
+            "pass_meia":passagens_meia,
+            "jan":janeiro,
+            "fev":fevereiro,
+            "mar":marco,
+            "abr":abril
+            
         }
         return Response(data)

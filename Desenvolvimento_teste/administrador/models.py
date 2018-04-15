@@ -32,8 +32,11 @@ class Controle_Arrecadacao(models.Model):
     encomendas = models.FloatField(blank=True)
     
     outros = models.FloatField(null=True, blank=True)   
-    total = models.FloatField(blank=True)
+    total = models.FloatField(blank=True, unique_for_date='data_viagem')
     
+    class Meta:
+        unique_together = ('data_viagem',)
+        
     def __str__(self):
         return self.barco.__str__()
     
@@ -47,7 +50,10 @@ class Controle_Despesas(models.Model):
     tripulacao = models.FloatField(null=False, blank=True, default=0)
     alimentacao = models.FloatField(blank=True, default=0)
     outros = models.FloatField(null=False, blank=True, default=0)   
-    total = models.FloatField(blank=True, default=0)
+    total = models.FloatField(blank=True, unique_for_date='data_viagem')
+    
+    class Meta:
+        unique_together = ('data_viagem',)
     
 
    
