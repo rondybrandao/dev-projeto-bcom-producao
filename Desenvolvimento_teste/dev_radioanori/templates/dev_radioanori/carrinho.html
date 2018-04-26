@@ -34,41 +34,7 @@
 	                <h1 style="margin:0px;" ><a href="/" ><span class="largenav">beiraonline.com</span></a></h1>
 	            </div>
 	            <div class="col-sm-8 col-md-8 col-xs-11">	               
-	                <form class="navbar-form"  method="POST">{% csrf_token %}
-				        <div class="form-group">
-				         <div class="col-md-3">
-				          <select class="form-control carrinho" id="sel1" name="origem" >
-					        <option value="" disabled selected>De:</option>
-					        <option value="Anori" name="anori">Anori</option>
-					        <option value="Anamã" name="anama">Anamã</option>
-					        <option value="Codajas" name="codajas">Codaja</option>
-					        <option value="Coari" name="coari">Coari</option>
-					        <option value="Manaus" name="manaus">Manaus</option>
-				    	 </select>
-				        </div>
-				        <div class="col-md-3">
-				         <select class="form-control carrinho" id="sel2"  name="destino">
-					        <option value="" disabled selected>Para:</option>
-					        <option value="Anori" name="anori">Anori</option>
-					        <option value="Anamã" name="anama">Anamã</option>
-					        <option value="Codajas" name="codajas">Codaja</option>
-					        <option value="Coari" name="coari">Coari</option>
-					        <option value="Manaus" name="manaus">Manaus</option>
-				    	 </select>
-				        </div>
-				        
-				        <div class="col-md-3">
-				         <input type="date" class="form-control carrinho" name="data_viagem" placeholder="Data da Viagem" placeholder="Data da viagem">
-				        </div>
-				        
-				        <input type="hidden" class="form-control" name="inteira" id="inteira-modal" value={{inteira}}>
-				        <input type="hidden" class="form-control" name="meia" id="meia-modal" value={{meia}}>
-				        
-				        <div class="col-md-3">
-				         <button type="submit" class="btn btn-default">Procurar</button>
-				        </div>
-				       </div>
-				     </form>
+	                
 	            </div>
 	            <!-- <div class="cart largenav col-sm-2 col-md-2">
 	                <a class="cart-button">
@@ -93,59 +59,39 @@
 	<div class="container">
 		<div class="row">
 			<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
-			{% for v, t in viagem.items %}
-			   <form class="form-horizontal" role="form" action='carrinho/' method="POST">{% csrf_token %}
-				  <ul class="event-list">
-					<li>
-						<time datetime="{{v.data_da_viagem|date:"d M Y" }}">
-							<span class="day">{{v.data_da_viagem|date:"d M" }}</span>
-							<span class="month">07:00</span>
-							<span class="year">{{v.data_da_viagem|date:"Y" }}</span>
-							<span class="time">ALL DAY</span>
-						</time>
-						<img alt="semeador Pinheiro" src="{% static "imagens/ajato.jpg" %}" />
-						<div class="info">
-							<h2 class="title">{{v.embarcacao}}</h2>
-							<!-- <ul>
-								<a href="#my_modal"  data-toggle="modal" data-target="#my_modal" id="inteiraInput" class="btn btn-primary" data-whateverInteira="{{inteira}}" data-whateverMeia="{{meia}}">
-									<li style="width:33%;"> <span> inteira: {{inteira}}</span> </li>
-								</a>
-					
-								<a href="#my_modal" data-toggle="modal" id="meiaInput" class="btn btn-primary">
-									<li style="width:33%;"> <span> meia: </span>{{meia}} </li>
-								</a>									
-							</ul> -->
-							
-							<p class="desc">{{origem}} - {{destino}}</p>
-							<p class="desc">Total: R$ {{t}}</p>
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
-								 data-whatevernome="{{origem}}" data-destino="{{destino}}" data-whateverinteira="{{inteira}}" data-whatevermeia="{{meia}}" >passagens: {{passagens}}</button>
-							
-							<input type="hidden"  class="form-control" name="origem" id="recipient-name" value='{{origem}}'>
-	            			<input type="hidden"  class="form-control" name="destino" id="destino" value="{{destino}}">
-	            			<input type="hidden"  class="form-control" name="data_viagem" id="data_viagem" value="{{data_viagem}}">
-	            			<input type="hidden"  class="form-control" name="inteira" id="inteira-modal" value="{{inteira}}">
-	            			<input type="hidden"  class="form-control" name="meia" id="meia-modal" value="{{meia}}">
-	            			<input type="hidden"  class="form-control" name="total" id="total-modal" value="{{t}}">
-	            			<input type="hidden"  class="form-control" name="pk" id="pk" value="{{v.pk}}">
-							
-							<div class="btn-pesquisar text-right">
-					        	<button type="submit" class="btn btn-success btn-block">Comprar</button>
-					        	     	
-					    	</div>
-					    	
-					    	
-						</div>
-					  </li>
-					 </ul>
-					 <br>
-					 <br>     
-		          </form>
-		          {% endfor %}
-		         
-		        </div>				
-			</div>
-			<div>
+				<div class="form-group">
+	            	<label for="origem-modal" class="col-form-label">Origem:</label>
+	            	{{origem}}
+	          	</div>
+	          	<div class="form-group">
+	            	<label for="inteira-modal" class="col-form-label">Passagen Inteira:</label>
+	            	{{inteira}}
+	          	</div>
+				<div class="form-group">
+	            	<label for="meia-modal" class="col-form-label">Passagen Meia:</label>
+	            	{{meia}}
+	          	</div>
+	          	<div class="form-group">
+	            	<label for="total" class="col-form-label">Total:</label>
+	            	{{total}}
+	          	</div>
+	          	<form class="form-horizontal" role="form" action="{% url 'pagseguroAPI' pk=carrinho.pk %}" method="POST">{% csrf_token %}
+	          	
+		          	<input type="hidden"  class="form-control" name="origem" id="recipient-name" value='{{origem}}'>
+		            <input type="hidden"  class="form-control" name="destino" id="destino" value="{{destino}}">
+		         	<input type="hidden"  class="form-control" name="data_viagem" id="data_viagem" value="{{data_viagem}}">
+		            <input type="hidden"  class="form-control" name="inteira" id="inteira-modal" value="{{inteira}}">
+		            <input type="hidden"  class="form-control" name="meia" id="meia-modal" value="{{meia}}">
+		            <input type="hidden"  class="form-control" name="total" id="total-modal" value="{{t}}">
+		            <input type="hidden"  class="form-control" name="pk" id="pk" value="{{v.pk}}">
+	          	
+					<a class="btn btn-primary" href="javascript:window.history.go(-1)"><span class="#"></span>Voltar</a>
+
+					<button type="submit" class="btn btn-success btn-block">Comprar</button>
+		        </form>
+		    </div>				
+	    </div>
+		<div>
 				<br>
 				<br>
 				<br>
@@ -158,8 +104,8 @@
 				<br>
 				<br>
 				<br>
-			</div>
 		</div>
+	</div>
 		
 	<footer>
 	  <div class="footerHeader" ></div>
@@ -235,13 +181,19 @@
 	            <input type="hidden"  class="form-control" name="origem" id="recipient-name">
 	            <input type="hidden"  class="form-control" name="destino" id="destino">
 	            <input type="hidden"  class="form-control" name="data_viagem" id="data_viagem">
-	         
+	         	
+	          <div class="form-group">
+	            {{origem}} - {{destino}} - {{data_viagem}}
+	          </div>
+	          
+	          <div class="form-group">
 	            <label for="inteira-modal" class="col-form-label">Inteira</label>
-	            <input type="number"  name="inteira" id="inteira-modal">
-	          
+	            <input type="text" class="form-control" name="inteira" id="inteira-modal">
+	          </div>
+	          <div class="form-group">
 	            <label for="text" class="col-form-label">Meia</label>
-	            <input type="number"  name="meia" id="meia-modal"></input>
-	          
+	            <textarea class="form-control" name="meia" id="meia-modal"></textarea>
+	          </div>
 	        	<div class="modal-footer">
 	        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        		<button type="submit" class="btn btn-primary">Alterar</button>
@@ -264,7 +216,7 @@
 	  	// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 	  	// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 	  	var modal = $(this)
-	  	modal.find('.modal-title').text( recipientnome + ' - ' + destino )
+	  	modal.find('.modal-title').text('Passagem para ' + recipientnome)
 	  	modal.find('#recipient-name').val(recipientnome)
 	  	modal.find('#destino').val(destino)
 	  	modal.find('#inteira-modal').val(recipientinteira)

@@ -1,0 +1,376 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Radio Anori/Passagens</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/css-lista_viagem.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/css-passagem.css' %}">
+<link rel="stylesheet" href="{% static 'css/css-navbarmenu.css' %}">
+
+<script type="text/javascript" src="{% static 'js/navbarmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/carrinho.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: separate;
+    border-spacing: 5px;
+    border-color: gray;
+}
+</style>
+
+</head>
+<body>
+<div>
+	<div id="flipkart-navbar">
+	    <div class="container-fluid">
+	        <div class="row row1">
+	            
+	        </div>
+	        <div class="row row2">
+	            <div class="col-sm-2 col-md-2">
+	                <h2 style="margin:0px;"><span class="smallnav menu" onclick="openNav()">☰ beiraonline.com</span></h2>
+	                <h1 style="margin:0px;" ><a href="/" ><span class="largenav">beiraonline.com</span></a></h1>
+	            </div>
+	            <div class="col-sm-8 col-md-8 col-xs-11">	               
+	                <form class="navbar-form"  method="GET">
+				        <div class="form-group">
+				         <div class="col-md-3">
+				          <select class="form-control carrinho" id="sel1" name="sel1" >
+					        <option value="" disabled selected>De:</option>
+					        <option value="Anori" name="anori">Anori</option>
+					        <option value="Anamã" name="anama">Anamã</option>
+					        <option value="Codajas" name="codajas">Codaja</option>
+					        <option value="Coari" name="coari">Coari</option>
+					        <option value="Manaus" name="manaus">Manaus</option>
+				    	 </select>
+				        </div>
+				        <div class="col-md-3">
+				         <select class="form-control carrinho" id="sel2"  name="sel2">
+					        <option value="" disabled selected>Para:</option>
+					        <option value="Anori" name="anori">Anori</option>
+					        <option value="Anamã" name="anama">Anamã</option>
+					        <option value="Codajas" name="codajas">Codaja</option>
+					        <option value="Coari" name="coari">Coari</option>
+					        <option value="Manaus" name="manaus">Manaus</option>
+				    	 </select>
+				        </div>
+				        
+				        <div class="col-md-3">
+				         <input type="date" class="form-control carrinho" name="data" placeholder="Data da Viagem" placeholder="Data da viagem">
+				        </div>
+				        
+				        <div class="col-md-3">
+				         <button type="submit" class="btn btn-default">Procurar</button>
+				        </div>
+				       
+				       </div>
+				        
+				     </form>
+				
+	            </div>
+	            <div class="cart largenav col-sm-2 col-md-2">
+	                <a class="cart-button">
+	                    <i class="fa fa-shopping-cart" aria-hidden="true">Carrinho R${{total}}</i>
+	                </a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<div id="mySidenav" class="sidenav">
+	    <div class="container" style="background-color: #2874f0; padding-top: 10px;">
+	        <h1 style="margin:0px;" ><a href="/passagens" ><span class="sidenav-heading">beiraonline.com</span></a></h1>
+	        <!--  <span class="sidenav-heading">beiraonline.com</span>-->
+	        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+	    </div>
+	    <a href="#">Inicio</a>
+	    <a href="#">Promoções</a>
+	    <a href="#">Contato</a>
+	    <a href="#">Nosso compromisso</a>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+			   <form method="POST">{% csrf_token %}
+                      
+                      	<p class="lead">Poltronas</p>
+						<table>
+							<tr>
+								<td><label class="niceform"> 01 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 02 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 03 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 04 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 05 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 06 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 07 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 08 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 09 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 10 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 11 <input type="checkbox" value="06" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 12 <input type="checkbox" value="07" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								
+								<td><label class="niceform"> 13 <input type="checkbox" value="08" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 14 <input type="checkbox" value="09" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 15 <input type="checkbox" value="10" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 16 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 17 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 18 <input type="checkbox" value="03" name="pesquisa"> </label></td>											
+							
+							</tr>
+							<tr>
+								<td><label class="niceform"> 19 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 20 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 21 <input type="checkbox" value="11" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 22 <input type="checkbox" value="12" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 23 <input type="checkbox" value="13" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 24 <input type="checkbox" value="14" name="pesquisa"> </label></td>
+																		
+							</tr>
+							<tr>
+								<td><label class="niceform"> 25 <input type="checkbox" value="15" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 26 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 27 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 28 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 29 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 30 <input type="checkbox" value="05" name="pesquisa"> </label></td>											
+							
+							</tr>
+							<tr>
+								<td><label class="niceform"> 31 <input type="checkbox" value="16" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 32 <input type="checkbox" value="17" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 33 <input type="checkbox" value="18" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 34 <input type="checkbox" value="19" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 35 <input type="checkbox" value="20" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 36 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								
+							
+							</tr>
+							<tr>
+								<td><label class="niceform"> 37 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 38 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 39 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 40 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 41 <input type="checkbox" value="21" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 42 <input type="checkbox" value="22" name="pesquisa"> </label></td>
+								
+							</tr>
+							<tr>
+								<td><label class="niceform"> 43 <input type="checkbox" value="23" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 44 <input type="checkbox" value="24" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 45 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 46 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 47 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 48 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								
+							</tr>
+							<tr>
+								<td><label class="niceform"> 49 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 50 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 51 <input type="checkbox" value="21" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 52 <input type="checkbox" value="22" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 53 <input type="checkbox" value="23" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 54 <input type="checkbox" value="24" name="pesquisa"> </label></td>
+								
+							</tr>
+							<tr>
+								<td><label class="niceform"> 55 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 56 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 57 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 58 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 59 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 60 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 61 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 62 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 63 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 64 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 65 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 66 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 67 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 68 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 69 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 70 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 71 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 72 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 73 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 74 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 75 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 76 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 77 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 78 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 79 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 80 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 81 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 82 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 83 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 84 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 85 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 86 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 87 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 88 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 89 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 90 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 91 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 92 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 93 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 94 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 95 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 96 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 97 <input type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 98 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 99 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 100 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 101 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 103 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+							</tr>
+						
+						</table>
+						
+							<div class="col-md-6">
+					        	<button type="submit" name="pesquisa" class="btn btn-success" >Reservar</button>
+					        </div>
+					 	
+					</form>
+		        </div>				
+			</div>
+		</div>
+		
+	<footer>
+	  <div class="footerHeader" ></div>
+	   <div class="row">
+		<div class="col-md-4" >
+		    <h3><strong>beiraonline.com</strong></h3>
+		    <p>
+		        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+		    </p>
+		</div>
+		
+		<div class="col-md-4 payment">
+		    <h4 style="color: white;">Formas de Pagamento</h4>
+		    <div class="col-md-2"><a href="#" ><img src="{% static "imagens/visa-card.png" %}" class="img-thumbnail"></a></div>
+		    <div class="col-md-2"><a href="#" ><img src="{% static "imagens/american-express-3.png" %}" class="img-thumbnail" ></a></div>
+		    <div class="col-md-2"><a href="#" ><img src="{% static "imagens/mastercard-card.png" %}" class="img-thumbnail"  ></a></div>
+		</div>
+		<div class="col-md-4" >
+		    <h4 style="color: white;">Contato</h></h4>
+		    <ul>
+		        <li>Fone : (92) 99252 - 7342</li>
+		        <li>E-mail : beiraonline@beiraonline.com</li>	        
+		    </ul>
+		    <ul class="sm">
+		        <li><a href="#" ><img src="https://www.facebook.com/images/fb_icon_325x325.png" class="img-responsive"></a></li>
+		        <li><a href="#" ><img src="https://lh3.googleusercontent.com/00APBMVQh3yraN704gKCeM63KzeQ-zHUi5wK6E9TjRQ26McyqYBt-zy__4i8GXDAfeys=w300" class="img-responsive" ></a></li>
+		        <li><a href="#" ><img src="http://playbookathlete.com/wp-content/uploads/2016/10/twitter-logo-4.png" class="img-responsive"  ></a></li>
+		    </ul>
+		</div>
+    </div>
+	</footer>
+	
+	<div class="modal" id="my_modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title">Modal header</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Adulto</p>
+	        <input type="text" name="bookId" value=""/>
+	        <p>Criança</p>
+	        <input type="text" name="bookId" value=""/>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Mudar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+</div>	
+</body>
+</html>

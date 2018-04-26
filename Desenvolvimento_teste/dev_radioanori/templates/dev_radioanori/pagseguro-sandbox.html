@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta http-equiv="content-type" content="application/x-www-form-urlencoded; charset=iso-8859-1" />
+
+<title>Beiraonline-sanbox</title>
+
+<script type="text/javascript"
+src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js">
+
+PagSeguroLightbox({
+    }, {
+    success : function(transactionCode) {
+        alert("success - " + transactionCode);
+    },
+    abort : function() {
+        alert("abort");
+    }
+});
+
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+				
+				<a class="btn btn-primary" href="javascript:window.history.go(-1)"><span class="#"></span>Voltar</a>
+				
+				<button onclick="PagSeguroLightbox('{{code}}')" class="btn btn-success btn-block">Comprar</button>
+				
+				<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+		    </div>	
+		    						
+	    </div>
+		<div>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+		</div>
+	</div>
+	
+						
+</body>
+</html>

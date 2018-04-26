@@ -8,6 +8,8 @@ class Controle_Embarcacao(models.Model):
     user = models.OneToOneField(User, null=True, blank=True)
     nome = models.CharField(max_length=20)
     proprietario = models.CharField(max_length=20)
+    preco_passagem_inteira = models.FloatField(null=True, blank=True)
+    preco_passagem_meia = models.FloatField(null=True, blank=True)
     
     def __str__(self):
         return self.nome
@@ -112,7 +114,8 @@ class Tripulacao(models.Model):
     salario = models.FloatField(null=True, blank=True)
     data_inicio = models.DateField(null=True, blank=True)
   
-        
+
+            
 class Controle_ArrecadacaoForm(ModelForm):
     class Meta: 
         model = Controle_Arrecadacao

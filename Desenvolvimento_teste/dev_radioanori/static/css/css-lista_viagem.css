@@ -114,9 +114,9 @@
 	
 	footer {
     background-color:rgba(44, 62, 80,1.0);
-    position:absolute;
+    position:relative;
     width:100%;
-    bottom:0px;
+    bottom:0%;
     font-weight:lighter;
     color:white;
     margin: 0 0 0px; /* altura do seu footer */

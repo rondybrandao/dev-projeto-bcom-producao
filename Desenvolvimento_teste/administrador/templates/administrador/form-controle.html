@@ -78,10 +78,19 @@
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="{% url 'tripulacao' %}">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMultiBeta" data-parent="#exampleAccordion" href="{% url 'tripulacao' %}">
             <i class="fa fa-user-plus"></i>
             <span class="nav-link-text">Tripulação</span>
           </a>
+          	<ul class="sidenav-second-level collapse" id="collapseMultiBeta">
+            <li>
+              <a href="{% url 'tripulacao' %}">Novo</a>
+            </li>
+            <li>
+              <a href="{% url 'tripulacao-list' %}">Lista</a>
+            </li>
+       
+            </ul>
         </li>
         
         
