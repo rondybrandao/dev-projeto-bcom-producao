@@ -1,14 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Viagem, Compra, Carrinho
-from dev_radioanori.models import Passagem
+from .models import Viagem, Compra, Carrinho, Passagem, Poltrona
+
 from django.template.context_processors import request
 from django.http.response import HttpResponse
+from django.http import JsonResponse
+from django.core import serializers
+
 from xml.dom.minidom import parse
+
+from django.views.decorators.http import require_http_methods
+from django.db import transaction
 
 import xml.etree.ElementTree as ET
 import requests
 import decimal
 from imaplib import Response_code
+from itertools import count
+
+from pagseguro.api import PagSeguroApiTransparent, PagSeguroItem
+from pagseguro.signals import checkout_realizado
+from pagseguro.signals import notificacao_recebida
+
+from .exceptions import CheckoutException
+from rest_framework.utils import json
+from pagseguro.settings import PAYMENT_URL
+from _ast import Num
+
 
 
 # Create your views here.
@@ -227,7 +244,7 @@ def pesquisar_viagens(request):
     if request.method=='POST':
         print("POST")
         viagem = Viagem.objects.filter(origem=origem)
-        
+         
         for v in viagem:
             total=(v.preco_adulto * int(qnt_inteira) + v.preco_crianca * int(qnt_meia))
             carrinho = Carrinho.objects.create(viagem=v, qnt_inteira=qnt_inteira, qnt_meia=qnt_meia, total=total)
@@ -241,38 +258,321 @@ def pesquisar_viagens(request):
             r = (preco_pago/preco_original) * 100
             des = 100 - r
             numero_decimal = '{:.2f}'.format(des)
-            print('preco-pago',preco_pago, 'preco-original',preco_original, 'desconto',numero_decimal)
+             
             #DISCOUNT_PERCENT=numero_decimal
-            
+             
             print(carrinhoId, total, carrinhoDescricao)
-            checkout = {
+            sessions = {
                 'email':'rondynely@hotmail.com',
                 'token':'9F7A75D37B074BF4812D45CA5091ABEC',
-                'currency':'BRL',
-                'itemId1':carrinhoId,
-                'itemDescription1':'Manaus Anori',
-                'itemAmount1':carrinhoAmount1,
-                'itemQuantity1':qnt_passagens,
-                'paymentMethodGroup1':'ONLINE_DEBIT',
-                'paymentMethodConfigKey1_1':'DISCOUNT_PERCENT',
-                'paymentMethodConfigValue1_1':numero_decimal
                 }
-            
-            response = requests.post('https://ws.pagseguro.uol.com.br/v2/checkout',data=checkout)           
+             
+            response = requests.post('https://ws.pagseguro.uol.com.br/v2/sessions',data=sessions)           
             root = ET.fromstring(response.text)
             code=root[0].text
             carrinho_dic[carrinho]=code
+           
+         
+        context= {'carrinho':carrinho_dic,
+                  'code':code_dic,
+                  'viagem':viagem_dic,
+                  'qnt_passagens':qnt_passagens}
+         
+        return render(request, 'dev_radioanori/lista-viagem-prototipo2.html', context)
+
+#===============================================================================
+# def pesquisar_viagens(request):
+#     origem = request.POST.get('origem')  
+#     qnt_inteira = request.POST.get('inteira') 
+#     qnt_meia = request.POST.get('meia')
+#     viagem_dic = {}
+#     carrinho_dic = {}
+#     code_dic = {}
+#     qnt_passagens = []
+#     if request.method=='POST':
+#         print("POST")
+#         viagem = Viagem.objects.filter(origem=origem)
+#         
+#         for v in viagem:
+#             total=(v.preco_adulto * int(qnt_inteira) + v.preco_crianca * int(qnt_meia))
+#             carrinho = Carrinho.objects.create(viagem=v, qnt_inteira=qnt_inteira, qnt_meia=qnt_meia, total=total)
+#             carrinhoId = carrinho.pk
+#             viagem_dic[v]=total
+#             qnt_passagens=(int(qnt_inteira) + int(qnt_meia))
+#             carrinhoDescricao = v.origem + '-' + v.destino
+#             carrinhoAmount1 = v.preco_adulto
+#             preco_pago = total
+#             preco_original = v.preco_adulto * qnt_passagens
+#             r = (preco_pago/preco_original) * 100
+#             des = 100 - r
+#             numero_decimal = '{:.2f}'.format(des)
+#             print('preco-pago',preco_pago, 'preco-original',preco_original, 'desconto',numero_decimal)
+#             #DISCOUNT_PERCENT=numero_decimal
+#             
+#             print(carrinhoId, total, carrinhoDescricao)
+#             checkout = {
+#                 'email':'rondynely@hotmail.com',
+#                 'token':'9F7A75D37B074BF4812D45CA5091ABEC',
+#                 'currency':'BRL',
+#                 'itemId1':carrinhoId,
+#                 'itemDescription1':'Manaus Anori',
+#                 'itemAmount1':carrinhoAmount1,
+#                 'itemQuantity1':qnt_passagens,
+#                 'paymentMethodGroup1':'ONLINE_DEBIT',
+#                 'paymentMethodConfigKey1_1':'DISCOUNT_PERCENT',
+#                 'paymentMethodConfigValue1_1':numero_decimal
+#                 }
+#             
+#             response = requests.post('https://ws.pagseguro.uol.com.br/v2/checkout',data=checkout)           
+#             root = ET.fromstring(response.text)
+#             code=root[0].text
+#             carrinho_dic[carrinho]=code
+#         
+#         print(code_dic)  
+#         
+#         context= {'carrinho':carrinho_dic,
+#                   'code':code_dic,
+#                   'viagem':viagem_dic,
+#                   'qnt_passagens':qnt_passagens}
+#         
+#         return render(request, 'dev_radioanori/lista-viagem-prototipo.html', context)
+#===============================================================================
+
+#===============================================================================
+# def listar_viagens(request):
+#     print("lista_viagens")
+#     origem = request.POST.get('origem')  
+#     qnt_inteira = request.POST.get('inteira') 
+#     qnt_meia = request.POST.get('meia')
+#     viagem_dic = {}
+#     carrinho_dic = {}
+#     code_dic = {}
+#     qnt_passagens = []
+#     if request.method=='POST':
+#         print("POST")
+#         viagem = Viagem.objects.filter(origem=origem)
+#         
+#         for v in viagem:
+#             total=(v.preco_adulto * int(qnt_inteira) + v.preco_crianca * int(qnt_meia))
+#             carrinho = Carrinho.objects.create(viagem=v, qnt_inteira=qnt_inteira, qnt_meia=qnt_meia, total=total)
+#             carrinhoId = carrinho.pk
+#             viagem_dic[v]=total
+#             qnt_passagens=(int(qnt_inteira) + int(qnt_meia))
+#             carrinhoDescricao = v.origem + '-' + v.destino
+#             carrinhoAmount1 = v.preco_adulto
+#             preco_pago = total
+#             preco_original = v.preco_adulto * qnt_passagens
+#             r = (preco_pago/preco_original) * 100
+#             des = 100 - r
+#             numero_decimal = '{:.2f}'.format(des)
+#             
+#             #DISCOUNT_PERCENT=numero_decimal
+#             
+#             print(carrinhoId, total, carrinhoDescricao)
+#             sessions = {
+#                 'email':'rondynely@hotmail.com',
+#                 'token':'9F7A75D37B074BF4812D45CA5091ABEC',
+#                 }
+#             
+#             response = requests.post('https://ws.pagseguro.uol.com.br/v2/sessions',data=sessions)           
+#             root = ET.fromstring(response.text)
+#             code=root[0].text
+#             carrinho_dic[carrinho]=code
+#           
+#         
+#         context= {'carrinho':carrinho_dic,
+#                   'code':code_dic,
+#                   'viagem':viagem_dic,
+#                   'qnt_passagens':qnt_passagens}
+#         
+#         return render(request, 'dev_radioanori/lista-viagem-prototipo2.html', context)
+#     
+#===============================================================================
+
+
+def listar_viagens(request):
+    print("lista_viagens")
+    origem = request.POST.get('origem')  
+    qnt_inteira = request.POST.get('inteira') 
+    qnt_meia = request.POST.get('meia')
+    viagem_dic = {}
+    carrinho_dic = {}
+    code_dic = {}
+    qnt_passagens = []
+    if request.method=='POST':
+        print("POST")
+        viagem = Viagem.objects.filter(origem=origem)
         
-        print(code_dic)  
+        for v in viagem:
+            total=(v.preco_adulto * int(qnt_inteira) + v.preco_crianca * int(qnt_meia))
+            carrinho = Carrinho.objects.create(viagem=v, qnt_inteira=qnt_inteira, qnt_meia=qnt_meia, total=total)
+            carrinhoId = carrinho.pk
+            viagem_dic[v]=total
+            qnt_passagens=(int(qnt_inteira) + int(qnt_meia))
+            carrinhoDescricao = v.origem + '-' + v.destino
+        
+            carrinho_dic[carrinho] = qnt_passagens    
+        print(carrinho_dic.items()) 
         
         context= {'carrinho':carrinho_dic,
                   'code':code_dic,
                   'viagem':viagem_dic,
                   'qnt_passagens':qnt_passagens}
         
-        return render(request, 'dev_radioanori/lista-viagem-prototipo.html', context)
-             
+        return render(request, 'dev_radioanori/lista-viagem-prototipo3.html', context)
 
+def sandbox(request):
+    print("sandbox")
+    c = request.GET.get('pk', None)
+    qnt = request.GET.get('qnt_passagens', None)
+    carrinho = get_object_or_404(Carrinho, pk=c)
+    car = carrinho.total
+    car = '{:.2f}'.format(car)
+    pagseguro_api = PagSeguroApiTransparent()
+    data = pagseguro_api.get_session_id()
+    session_id = data['session_id']
+    
+    if request.method=='POST':
+        print("post")
+        bandeira = request.POST.get('brand')
+        nome = request.POST.get('username')
+        token = request.POST.get('token')
+        hashPagseguro = request.POST.get('hash')
+        api = PagSeguroApiTransparent()
+        descricao = carrinho.viagem.destino
+        
+        item1 = PagSeguroItem(id=c, description=descricao, amount=car, quantity=1)
+        api.add_item(item1)
+        
+        sender = {'name': 'Jose Comprador', 'area_code': 92, 'phone': 56273440, 'email': 'comprador@uol.com.br', 'cpf': '22111944785',}
+        api.set_sender(**sender)
+        
+        shipping = {'street': "Av. Brigadeiro Faria Lima", 'number': 1384, 'complement': '5o andar', 'district': 'Jardim Paulistano', 'postal_code': '01452002', 'city': 'Sao Paulo', 'state': 'SP', 'country': 'BRA',}
+        api.set_shipping(**shipping)
+        
+        api.set_payment_method('creditcard')
+        data = {'quantity': 1, 'value': car, 'name': 'Jose Comprador', 'birth_date': '27/10/1987', 'cpf': '22111944785', 'area_code': 11, 'phone': 56273440, 'no_interest_quantity': 5}
+        api.set_creditcard_data(**data)
+        billing_address = {'street': 'Av. Brig. Faria Lima', 'number': 1384, 'district': 'Jardim Paulistano', 'postal_code': '01452002', 'city': 'Sao Paulo', 'state': 'SP', 'country': 'BRA',}
+        api.set_creditcard_billing_address(**billing_address)
+        api.set_creditcard_token(token)
+        
+        api.set_sender_hash(hashPagseguro)
+        
+        data = api.checkout()
+        
+        print("data", data)
+        
+        if data['success'] is False:
+            raise CheckoutException(data['message'])
+        
+        print(notificacao_recebida.connect(load_signal)) 
+
+        return HttpResponse(notificacao_recebida.connect(load_signal))
+        
+        
+        
+    context = {
+        'session':session_id,
+        'cart':carrinho,
+        'qnt':qnt,
+    
+        }
+    return render(request, 'dev_radioanori/sandbox-pagamento.html', context)
+
+def sandbox_debito(request):
+    if request.method=="POST":
+        print("post/sandbox-debito")
+        pk = request.POST.get('pk', None)
+        carrinho = get_object_or_404(Carrinho, pk=pk)
+        amount = carrinho.total
+        amount = '{:.2f}'.format(amount)
+        nome = request.POST.get('username')
+        cpf = request.POST.get('cpf')
+        hashPagseguro = request.POST.get('hash')
+        descricao = carrinho.viagem.destino
+        
+        item1 = PagSeguroItem(id=pk, description=descricao, amount=amount, quantity=1)
+        
+        api = PagSeguroApiTransparent()
+        api.add_item(item1)
+        
+        sender = {'name': 'Jose Comprador', 'area_code': 92, 'phone': 56273440, 'email': 'comprador@uol.com.br', 'cpf': '22111944785',}
+        api.set_sender(**sender)
+        
+        shipping = {'street': "Av. Brigadeiro Faria Lima", 'number': 1384, 'complement': '5o andar', 'district': 'Jardim Paulistano', 'postal_code': '01452002', 'city': 'Sao Paulo', 'state': 'SP', 'country': 'BRA',}
+        api.set_shipping(**shipping)
+        
+        api.set_payment_method('eft')
+        api.set_bank_name('bradesco')
+        
+        api.set_sender_hash(hashPagseguro)
+        
+        data = api.checkout()
+        
+        print("data", data)
+        
+        if data['success'] is False:
+            raise CheckoutException(data['message'])
+        
+        payment_url = data['transaction']['paymentLink']
+
+        return redirect(payment_url)
+  
+    return HttpResponse("deu certo")
+
+def load_signal(sender, transaction, **kwargs):
+    print("load_signal")
+    print(transaction['status'])
+    return HttpResponse(transaction['status'])
+
+def sandbox_checkout_realizado(request):
+    resposta = checkout_realizado.connect(load_signal)
+    print("checkout resposta", resposta)
+    return HttpResponse(resposta)
+   
+    
+def sandbox_pagamento(request):
+    print('sandbox_pagamento')
+    
+    if request.method=="POST":
+        print("post")
+        pagseguro_api = PagSeguroApiTransparent()
+        
+        #json = serializers.serialize('json', session_id)
+        return HttpResponse(json, content_type='application/json')
+        
+    
+    return render(request, 'dev_radioanori/sandbox.html')
+
+def sandbox_inicio_pagseguro(request):
+    
+    if request.method=="POST":
+        print('sandboc-inicio-pagamento')
+        pagseguro_api = PagSeguroApiTransparent()
+        data = pagseguro_api.get_session_id()
+        session_id = data['session_id']
+        return JsonResponse(session_id)
+            
+def pagseguroAPI_transparente(request, pk):
+    print("pagseguroAPI_transparente")
+    session = request.GET.get('session')
+    id = request.GET.get('pk')
+    description = request.GET.get('pk')
+    api = PagSeguroApiTransparent()
+    item1 = PagSeguroItem(id=id, description='passagem', amount='200.00', quantity=1)
+    api.add_item(item1)
+    
+    api.set_payment_method('eft')
+    
+    api.set_bank_name('itau')
+    
+    if request.method=="GET":
+        context = {'session':session,
+                   'item':item1}
+        
+        return render(request, 'dev_radioanori/pagseguro_transparente.html', context)
+    
 def carrinho(request):
     print("carrinho")
     origem = request.POST.get('origem')
@@ -285,6 +585,7 @@ def carrinho(request):
     pk = request.POST.get('pk')
     qnt_passagens = int(inteira) + int(meia)
     
+    
     if request.method=="POST":
         print("carrinho/POST")
         print('total:',total, 'pk:',pk)
@@ -296,6 +597,16 @@ def carrinho(request):
     
         return render(request, 'dev_radioanori/carrinho.html',{'pk':pk, 'origem':origem, 'destino':destino, 'inteira':inteira, 
                                                                 'meia':meia,'qnt':qnt_passagens, 'total':total, 'carrinho':carrinho})
+
+def pagseguro_transparente(request, code):
+    print("pagseguro transparente")
+    print(code)
+    context = {
+        'code':code
+        }
+    return render(request, 'dev_radioanori/pagseguro_transparente.html', context)
+
+
 def pagseguroAPI(request, pk):
     print("pagseguro")
     
@@ -329,19 +640,202 @@ def testeAPI(request):
     return render(request, 'dev_radioanori/pagseguro-sandbox.html', {'list':list})
 
 def carrinho_detalhe(request, pk):
+    print("carrinho_detalhe")
     carrinho_detalhe = get_object_or_404(Carrinho, pk=pk)
     return render(request, 'dev_radioanori/carrinho_detalhe.html', {'carrinho_detalhe':carrinho_detalhe})
 
 def escolher_poltrona(request, pk):
     carrinho = get_object_or_404(Carrinho, pk=pk)
-    num_usuario = request.POST.getlist('pesquisa')
-    print(num_usuario)
-    if request.method=="POST":
-        passagem = Passagem(poltrona=num_usuario,carrinho=carrinho)
-        print(passagem.poltrona)
-        
+    print('pk_carrinho:',carrinho.pk)
+    cart_total = carrinho.total
+    qnt = request.GET.get('qnt_passagens')
+    qnt = int(qnt)
+    pk_poltrona=Poltrona.objects.get(viagem=carrinho.viagem.pk)
+    pk_pol=pk_poltrona.pk
+    num_pol = []
+    np=[]
     
-    return render(request, 'dev_radioanori/mapa-poltrona.html')
+    if request.method=="POST":
+        num_usuario = request.POST.getlist('pesquisa')
+        name = request.POST.getlist('username')
+        cpf = request.POST.getlist('cpf')
+        
+        for p, n, c in zip(num_usuario, name, cpf):
+            Passagem.objects.create(poltrona=p, carrinho=carrinho, nome_passageiro=n, cpf=c)
+            num_pol.append(int(p))
+        
+        print('poltronas do usuario:',num_pol)
+        
+        p = Poltrona.objects.get(viagem=carrinho.viagem.pk)
+        pk_pol=p.pk
+        print('indisponiveis antes:',p.poltronas_indisponiveis)
+        np = p.poltronas_indisponiveis
+        np =np.strip('[]').strip('"''"')
+        print(np)
+        b = ","
+        for i in range(0,len(b)):
+            np=np.replace(b[i],"")
+            np=np.split()
+        print(np)
+        np = [int(i) for i in np]
+        print('np',np)
+        for n in num_pol:    
+            np.append(n)
+        print('num_pol final',num_pol)
+        print('np_final', np)
+        p.poltronas_indisponiveis = np
+        p.save()
+            
+        p = Poltrona.objects.get(pk=pk_pol)
+        print('indisponiveis depois',p.poltronas_indisponiveis)
+        
+        return redirect('fechar-venda', pk=carrinho.pk)
+        
+    context = {
+        'qnt':range(1, (qnt + 1) ),
+        'total':cart_total,
+        'pk_pol':pk_pol
+        }
+        
+
+    
+    return render(request, 'dev_radioanori/mapa-poltrona.html', context)
+
+def fechar_venda(request, pk):
+    cart = get_object_or_404(Carrinho, pk=pk)
+    nome = []
+    for x in Passagem.objects.filter(carrinho=cart):
+        nome.append(x.nome_passageiro)
+        print(x.nome_passageiro)
+    
+    return HttpResponse("Venda fechada, Compartilhe sua Chegada:")
+    
+
+def pesquisar_poltronas(request):
+    pk=request.GET.get('pk_poltrona')
+    print('pk',pk)
+    poltronas = Poltrona.objects.get(pk=pk)
+    
+    data = {
+        'poltronas': poltronas.poltronas_indisponiveis
+    }
+    print('lista poltrona',poltronas.poltronas_indisponiveis)
+    
+    return JsonResponse(data)
+    
+    
+    
+    
+#===============================================================================
+# API Pagseguro
+#===============================================================================
 
 
-
+#===============================================================================
+# def viagem_list(request):
+#     print("viagem_list")
+#     origem = request.POST.get('origem')  
+#     qnt_inteira = int(request.POST.get('inteira')) 
+#     qnt_meia = int(request.POST.get('meia'))
+#     viagens = {}
+#     total = []
+#     lista1 = []
+#     lista2 = []
+#     lista =[]
+#     if request.method=='POST':
+#         print("POST")
+#         viagem = Viagem.objects.filter(origem=origem)
+#         #cart = Cart.objects.get_cart_for_user(request.user)
+#         for v in viagem:
+#             ticket1 = Ticket.objects.create(viagem = v, title="Inteira para " + v.destino, type=1, price=v.preco_adulto)
+#             ticket2 = Ticket.objects.create(viagem = v, title="Meia para " + v.destino, type=2, price=v.preco_crianca)
+#             lista1 = [ticket1 for x in list(range(qnt_inteira))]
+#             lista1.append([ticket2 for x in list(range(qnt_meia))])    
+#             #total.append(qnt_inteira * v.preco_adulto + qnt_meia * v.preco_crianca)
+#                   
+#         for l in lista1[qnt_inteira]:
+#             if l:
+#                 lista.append(l)
+#             else:
+#                 print('vazia',l)     
+#         for l1 in lista1[:qnt_inteira]:
+#             print(l1.type)
+#             lista.append(l1)
+#         
+#         for l2 in lista:
+#             print('tipo:', l2.type)
+#         
+#         for v in viagem:
+#             viagens[v]=lista.__str__()
+#         
+#         context = {
+#             'lista':lista1,
+#             'quantity':(int(qnt_inteira) + int(qnt_meia)),
+#             'viagem':viagens
+#             }
+#         return render(request, 'dev_radioanori/lista-viagem-prototipo3.html', context=context)
+# 
+# 
+# def event_detail(request, pk):
+#     event = get_object_or_404(Viagem, id=pk)
+#     context = {
+#         'event': event,
+#         'cart': Cart.objects.get_cart_for_user(request.user)
+#     }
+#     return render(request, 'tickets/event_detail.html', context=context)
+# 
+# def cart_detail(request):
+#     context = {
+#         'cart': Cart.objects.get_cart_for_user(request.user)
+#     }
+#     return render(request, 'dev_radioanori/cart-detail.html', context=context)
+# 
+# 
+# 
+# @require_http_methods(['POST'])
+# def cart_clear(request):
+#     cart = Cart.objects.get_cart_for_user(request.user)
+#     cart.cart_items.all().delete()
+#     return redirect('cart_detail')
+# 
+# 
+# 
+# @require_http_methods(['POST'])
+# def cart_add_item(request):
+#     print("cart_add_item")
+#     cart = Cart.objects.get_cart_for_user(request.user)
+#     tickets = request.POST.get('tickets')
+#     
+#     if request.method=="POST":
+#         #print("cart_item_POST")
+#         #if form.is_valid():
+#         print(tickets)
+#         for t in tickets:
+#             Cart.objects.add_cart_item(cart.pk, t, 1)
+#         
+#         return redirect('cart_detail')
+# 
+# 
+# 
+# @require_http_methods(['POST'])
+# @transaction.atomic
+# def purchase_create(request):
+#     cart = Cart.objects.get_cart_for_user(request.user)
+#     purchase = Purchase.objects.create_checkout(cart)
+#     print(purchase.pk)
+#     return redirect('purchase_detail', pk=purchase.pk)
+# 
+# 
+# 
+# def purchase_list(request):
+#     purchases = Purchase.objects.filter(user=request.user)
+#     context = {'purchases': purchases}
+#     return render(request, 'tickets/purchase_list.html', context=context)
+# 
+# 
+# 
+# def purchase_detail(request, pk):
+#     purchase = get_object_or_404(Purchase, id=pk, user=request.user)
+#     context = {'purchase': purchase}
+#     return render(request, 'tickets/purchase_detail.html', context=context)
+#===============================================================================

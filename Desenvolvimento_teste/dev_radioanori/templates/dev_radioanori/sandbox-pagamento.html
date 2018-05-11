@@ -1,0 +1,297 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+    <title>sandbox pagamento</title>
+  </head>
+  <body>	
+	
+<div class="container">
+<hr>
+<div class="row">
+	<aside class="col-sm-6">
+		
+		<article class="card">
+		<div class="card-body p-5">
+		
+		<ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+				<i class="fa fa-credit-card"></i> Cartao de Credito</a></li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+				<i class="fa fa-university"></i> Debito online</a></li>
+		</ul>
+		
+		<div class="tab-content">
+		<div class="tab-pane fade show active" id="nav-tab-card">
+			<!-- <p class="alert alert-success">Some text success or error</p> -->
+			<form role="form" method="post" action="">{% csrf_token %}
+			<div class="form-group">
+				<label for="username">Nome completo </label>
+				<input type="text" class="form-control" name="username" id="id_username" placeholder="igual ao cartao" required="">
+			</div> <!-- form-group.// -->
+		
+			<div class="form-group">
+				<label for="cardNumber">Numero do cartao</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="cardNumber" id="id_cardNumber" placeholder="">
+					<div class="input-group-append">
+						<span class="input-group-text text-muted">
+							<i class="fa fa-cc-visa"></i>   <i class="fa fa-cc-amex"></i>   
+							<i class="fa fa-cc-mastercard"></i> 
+						</span>
+					</div>
+				</div>
+			</div> <!-- form-group.// -->
+		
+			<div class="row">
+			    <div class="col-sm-8">
+			        <div class="form-group">
+			            <label><span class="hidden-xs">Validade</span> </label>
+			        	<div class="input-group">
+			        		<input type="text" class="form-control" id="id_expMes" placeholder="MM" name="">
+				            <input type="text" class="form-control" id="id_expAno" placeholder="YYYY" name="">
+			        	</div>
+			        </div>
+			    </div>
+			    <div class="col-sm-4">
+			        <div class="form-group">
+			            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+			            <input type="number" class="form-control" id="id_cvv" required="">
+			        </div> <!-- form-group.// -->
+			    </div>
+			    
+			</div> <!-- row.// -->
+			<input type="hidden" id="id_brand" name="brand" value="">
+			<input type="hidden" id="id_token" name="token" value="">
+			<input type="hidden" id="hashPagseguro" name="hash" value="">
+			
+			<ul class="nav bg-light nav-pills rounded nav-fill mb-3">
+				<li class="nav-item">
+					<a href="javascript:window.history.go(-1)" class="col-md-12 subscribe btn btn-danger">Voltar</a></li>
+				<li class="nav-item">
+					<button class="subscribe btn btn-success btn-block" type="submit"> Confirmar  </button></li>
+			</ul>
+			</form>
+		</div> <!-- tab-pane.// -->
+		<div class="tab-pane fade" id="nav-tab-paypal">
+		<p>
+			<form role="form" method="post" action="{% url 'sandbox-debito' %}">{% csrf_token %}
+			<div class="form-group">
+				<label for="username">Nome completo</label>
+				<input type="text" class="form-control" name="username" id="id_username_debito" placeholder="" required="">
+			</div> <!-- form-group.// -->
+			
+			<div class="form-group">
+				<label for="username">CPF</label>
+				<input type="number" class="form-control" name="cpf" id="id_cpf" placeholder="apenas numero">
+			</div>
+			
+			<label for="cardNumber"><strong>Formas de Pagamento</strong></label>
+			
+			<div class="row">
+			    <div class="col-md-12 form-group">
+	
+				<div class="col-md-4" ><a href="#" ><img src="{% static 'imagens/img-bradesco.jpg' %}" class="img-thumbnail"></a></div>
+		        <div class="col-md-4" style="float: right;"><a href="#" ><img src="{% static 'imagens/img-bb.png' %}" class="img-thumbnail" ></a></div>
+			    <div class="col-md-4" style="float: right;"><a href="#" ><img src="{% static 'imagens/img-itau.png' %}" class="img-thumbnail"  ></a></div>
+				    
+			</div> <!-- form-group.// -->
+				
+			</div> <!-- row.// -->
+			
+			
+			<input type="hidden"  class="form-control" name="pk" value="{{cart.pk}}">
+			<input type="hidden" id="id_brand" name="brand" value="">
+			<input type="hidden" id="hashPagseguro_debito" name="hash" value="">
+			
+			<ul class="nav bg-light nav-pills rounded nav-fill mb-3">
+				<li class="nav-item">
+					<a href="javascript:window.history.go(-1)" class="col-md-12 subscribe btn btn-danger">Voltar</a></li>
+				<li class="nav-item">
+					<button class="subscribe btn btn-success btn-block" type="submit"> Confirmar  </button></li>
+			</ul>
+			</form>
+			
+		</div>
+		<!-- <a class="btn btn-success btn-block" href="javascript:window.history.go(-1)"><span class="#"></span>Voltar</a> -->
+		</div> <!-- tab-content .// -->
+		
+		</div> <!-- card-body.// -->
+		</article> <!-- card.// -->
+	</aside> <!-- col.// -->
+	
+	
+	<aside class="col-sm-6">
+		<article class="card">
+		<div class="card-body p-5">
+		
+		<div class="container">
+		    <div class="row">
+		        <div class="col-sm-12 col-md-12 col-md-offset-1">
+		            <table class="table table-hover">
+		                <thead>
+		                    <tr>
+		                    	<th>Barco</th>
+		                        <th>Viagem</th>
+		                        <th>Qnt</th>
+		                        <th class="text-center">Preço</th>
+		                        <th>Total</th>
+		                        
+		                    </tr>
+		                </thead>
+		                <tbody>
+		               
+		                    <tr>
+		                    	<td class="col-sm-2 col-md-4"><strong>{{cart.viagem.embarcacao}}</strong></td>
+		                        <td class="col-sm-8 col-md-5">
+		                        <div class="media">
+		                            <!-- <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a> -->
+		                            <div class="media-body">
+		                                <h6 class="media-heading"><a href="#">{{cart.viagem.origem}} {{cart.viagem.destino}}</a></h6>
+		                            </div>
+		                        </div></td>
+		                        <td class="col-sm-1 col-md-1" style="text-align: center">
+		                        	<strong>{{qnt}}</strong>
+		                        </td>
+		                        <td class="col-sm-1 col-md-1 text-center"><strong>${{cart.viagem.preco_adulto}}</strong></td>
+		                        <td class="col-sm-1 col-md-1"><strong>${{cart.total}}</strong></td>
+		                      
+		                  
+		                    </tr>
+		            
+		                    <tr>
+		                        <td>   </td>
+		                        <td>   </td>
+		                        <td>   </td>
+		                        <td><h3>Total</h3></td>
+		                        <td class="text-right"><h3><strong>${{cart.total}}</strong></h3></td>
+		                    </tr>
+		                    <tr>
+		                        <td>   </td>
+		                        <td>   </td>
+		                        <td>   </td>
+		                    </tr>
+		                    
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+		</div>
+		
+		</div> <!-- card-body.// -->
+		</article> <!-- card.// -->
+		
+		
+			</aside> <!-- col.// -->
+		</div> <!-- row.// -->
+		
+		<div><input type="hidden" id="id_session" value="{{session}}"></div>
+		<!-- <div><input type="text" id="hashPagseguro" value=""></div> -->
+		<div><input type="hidden" id="id_brand" value=""></div>
+		<div><input type="hidden" id="id_token" value=""></div>
+		
+		
+		</div>
+	
+	
+	
+	
+	
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ 	<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+ 	
+ 	<script type="text/javascript">
+ 			
+ 	$(function(){
+		 session = $("#id_session").val();
+		 PagSeguroDirectPayment.setSessionId(session);
+		 console.log(session);
+
+	 });
+ 	
+ 	$("#id_username").focus(function(){
+ 		identificador = PagSeguroDirectPayment.getSenderHash();
+ 		$("#hashPagseguro").val(identificador);
+ 		console.log(identificador);
+ 	});
+ 	
+ 	$("#id_username_debito").focus(function(){
+ 		identificador = PagSeguroDirectPayment.getSenderHash();
+ 		$("#hashPagseguro_debito").val(identificador);
+ 		console.log(identificador);
+ 	});
+ 	
+ 	 $("#id_cardNumber").keyup(function(){
+ 		 number = $("#id_cardNumber").val();
+ 		 BIN = number;
+ 		 
+ 		 PagSeguroDirectPayment.getBrand({
+ 		     cardBin: BIN,
+ 		     success: function(response) {
+ 		        bandeira = response['brand']['name'];
+ 		        $("#id_brand").val(bandeira);
+ 		        console.log(bandeira);
+ 		     },
+ 		     error: function(response) {
+ 		        //tratamento do erro
+ 		     },
+ 		     complete: function(response) {
+ 		        //tratamento comum para todas chamadas
+ 		     }
+ 		 });
+	 	
+ 	 });
+ 	
+ 	  $("#id_cvv").keyup(function(){
+ 		numCartao = $("#id_cardNumber").val();
+ 		nomeCartao = $("#id_username").val();
+ 		expMes = $("#id_expMes").val();
+ 		expAno = $("#id_expAno").val();
+ 		cvvCartao = $("#id_cvv").val();
+ 		cvvCard= cvvCartao;
+ 		bandeira = $("#id_brand").val();
+ 		
+ 		PagSeguroDirectPayment.createCardToken({
+ 	        cardNumber: numCartao,
+ 	        brand: bandeira,
+ 	        cvv: cvvCard,
+ 	        expirationMonth: expMes,
+ 	        expirationYear: expAno,
+ 	        
+ 	        success: function(response) {
+		        token = response['card']['token'];
+		        console.log(response);
+		        $("#id_token").val(token);
+		        
+		     },
+		     error: function(response) {
+		        console.log(response)
+		     },
+		     complete: function(response) {
+		        //tratamento comum para todas chamadas
+		     }
+ 	        
+ 	    });
+ 		
+ 	}); 
+ 	 
+ 	
+		
+ 		
+	</script>
+  </body>
+</html>

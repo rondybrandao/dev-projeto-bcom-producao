@@ -14,9 +14,13 @@
 <link rel="stylesheet" href="{% static 'css/css-navbarmenu.css' %}">
 
 <script type="text/javascript" src="{% static 'js/navbarmenu.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/carrinho-modal.js' %}"></script>
+
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 
 </head>
 <body>
@@ -91,14 +95,13 @@
 	<div class="container">
 		<div class="row">
 			<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
-			{% for v, t in viagem.items %}
-			   <form class="form-horizontal" role="form" action='carrinho/' method="POST">{% csrf_token %}
+			{% for car, val in carrinho.items %}
 				  <ul class="event-list">
 					<li>
 						<time datetime="{{v.data_da_viagem|date:"d M Y" }}">
-							<span class="day">{{v.data_da_viagem|date:"d M" }}</span>
+							<span class="day">{{car.viagem.data_da_viagem|date:"d M" }}</span>
 							<span class="month">07:00</span>
-							<span class="year">{{v.data_da_viagem|date:"Y" }}</span>
+							<span class="year">{{car.viagem.data_da_viagem|date:"y" }}</span>
 							<span class="time">ALL DAY</span>
 						</time>
 						<img alt="semeador Pinheiro" src="{% static "imagens/ajato.jpg" %}" />
@@ -114,33 +117,34 @@
 								</a>									
 							</ul> -->
 							
-							<p class="desc">{{origem}} - {{destino}}</p>
-							<p class="desc">Total: R$ {{t}}</p>
+							<p class="desc">{{car.viagem.origem}} - {{car.viagem.destino}}</p>
+							<p class="desc">Total: R$ {{car.total}}</p>
 							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
-								 data-whatevernome="{{origem}}" data-destino="{{destino}}" data-whateverinteira="{{inteira}}" data-whatevermeia="{{meia}}" >passagens: {{passagens}}</button>
-							
-							<input type="hidden"  class="form-control" name="origem" id="recipient-name" value='{{origem}}'>
-	            			<input type="hidden"  class="form-control" name="destino" id="destino" value="{{destino}}">
-	            			<input type="hidden"  class="form-control" name="data_viagem" id="data_viagem" value="{{data_viagem}}">
-	            			<input type="hidden"  class="form-control" name="inteira" id="inteira-modal" value="{{inteira}}">
-	            			<input type="hidden"  class="form-control" name="meia" id="meia-modal" value="{{meia}}">
-	            			<input type="hidden"  class="form-control" name="total" id="total-modal" value="{{t}}">
-	            			<input type="hidden"  class="form-control" name="pk" id="pk" value="{{v.pk}}">
-							
-							<div class="btn-pesquisar text-right">
-					        	<button type="submit" class="btn btn-success btn-block">Comprar</button>
-					        	     	
-					    	</div>
+								 data-whatevernome="{{car.viagem.origem}}" data-destino="{{car.viagem.destino}}" data-whateverinteira="{{car.qnt_inteira}}" data-whatevermeia="{{car.qnt_meia}}" >passagens: {{qnt_passagens}}</button>
+							<form action="{% url 'sandbox'   %}"  method="GET" >
+				
+		            			<input type="hidden"  class="form-control" name="pk"  value="{{car.pk}}">
+		            			<input type="hidden"  class="form-control" name="qnt_passagens" value="{{qnt_passagens}}">
+								<div class="btn-pesquisar text-right">
+						 			<button type="submit" class="btn btn-primary">Confirmar</button>
+						    	</div>
 					    	
-					    	
+					    	</form>
+					    	<form action="{% url 'escolher-poltrona' pk=car.pk %}" method="get">
+					    		<button type="submit" class="btn btn-primary">Escolhe Poltrona</button>
+					    		<input type="hidden"  class="form-control" name="qnt_passagens" value="{{qnt_passagens}}">
+					    	</form>
 						</div>
+						
+					    	
 					  </li>
+					  
 					 </ul>
 					 <br>
 					 <br>     
-		          </form>
+		        	
 		          {% endfor %}
-		         
+
 		        </div>				
 			</div>
 			<div>
@@ -189,6 +193,8 @@
 		</div>
     </div>
 	</footer>
+	
+	
 	
 	<div class="modal" id="my_modal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog">
@@ -251,6 +257,7 @@
 	  </div>
 	</div>
 	
+	
 	<script type="text/javascript">
 	  $('#exampleModal').on('show.bs.modal', function (event) {
 	  	var button = $(event.relatedTarget) // Button that triggered the modal
@@ -270,5 +277,6 @@
 	})
 </script>
 
+ 
 </body>
 </html>

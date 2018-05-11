@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="{% static 'css/css-navbarmenu.css' %}">
 
 <script type="text/javascript" src="{% static 'js/navbarmenu.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/carrinho.js' %}"></script>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -30,7 +29,6 @@ table, th, td {
 
 </head>
 <body>
-<div>
 	<div id="flipkart-navbar">
 	    <div class="container-fluid">
 	        <div class="row row1">
@@ -42,40 +40,7 @@ table, th, td {
 	                <h1 style="margin:0px;" ><a href="/" ><span class="largenav">beiraonline.com</span></a></h1>
 	            </div>
 	            <div class="col-sm-8 col-md-8 col-xs-11">	               
-	                <form class="navbar-form"  method="GET">
-				        <div class="form-group">
-				         <div class="col-md-3">
-				          <select class="form-control carrinho" id="sel1" name="sel1" >
-					        <option value="" disabled selected>De:</option>
-					        <option value="Anori" name="anori">Anori</option>
-					        <option value="Anamã" name="anama">Anamã</option>
-					        <option value="Codajas" name="codajas">Codaja</option>
-					        <option value="Coari" name="coari">Coari</option>
-					        <option value="Manaus" name="manaus">Manaus</option>
-				    	 </select>
-				        </div>
-				        <div class="col-md-3">
-				         <select class="form-control carrinho" id="sel2"  name="sel2">
-					        <option value="" disabled selected>Para:</option>
-					        <option value="Anori" name="anori">Anori</option>
-					        <option value="Anamã" name="anama">Anamã</option>
-					        <option value="Codajas" name="codajas">Codaja</option>
-					        <option value="Coari" name="coari">Coari</option>
-					        <option value="Manaus" name="manaus">Manaus</option>
-				    	 </select>
-				        </div>
-				        
-				        <div class="col-md-3">
-				         <input type="date" class="form-control carrinho" name="data" placeholder="Data da Viagem" placeholder="Data da viagem">
-				        </div>
-				        
-				        <div class="col-md-3">
-				         <button type="submit" class="btn btn-default">Procurar</button>
-				        </div>
-				       
-				       </div>
-				        
-				     </form>
+	                
 				
 	            </div>
 	            <div class="cart largenav col-sm-2 col-md-2">
@@ -100,227 +65,240 @@ table, th, td {
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-			   <form method="POST">{% csrf_token %}
+		<form action="" method="post">{% csrf_token %}
+			<div class="col-xs-6 col-sm-offset-1 col-sm-4">
+			   <input type="hidden" id="id_pk_pol" value="{{pk_pol}}">
                       
                       	<p class="lead">Poltronas</p>
-						<table>
+						<table id="myTable">
 							<tr>
-								<td><label class="niceform"> 01 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 02 <input type="checkbox" value="02" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 03 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 01 <input type="checkbox" value=01 id="1"  name="pesquisa"> </label></td>
+								<td><label class="niceform"> 02 <input type="checkbox" value=02 id="2"  name="pesquisa"> </label></td>
+								<td><label class="niceform"> 03 <input type="checkbox" value=03 id="3"  name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 04 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 05 <input type="checkbox" value="05" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 06 <input type="checkbox" value="01" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 04 <input id="4" type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 05 <input id="5" type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 06 <input id="6" type="checkbox" value="06" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 07 <input type="checkbox" value="02" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 08 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 09 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 07 <input id="7" type="checkbox" value="07" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 08 <input id="8" type="checkbox" value="08" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 09 <input id="9" type="checkbox" value="09" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 10 <input type="checkbox" value="05" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 11 <input type="checkbox" value="06" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 12 <input type="checkbox" value="07" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 10 <input id="10" type="checkbox" value="10" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 11 <input id="11" type="checkbox" value="11" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 12 <input id="12" type="checkbox" value="12" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								
-								<td><label class="niceform"> 13 <input type="checkbox" value="08" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 14 <input type="checkbox" value="09" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 15 <input type="checkbox" value="10" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 13 <input id="13" type="checkbox" value="13" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 14 <input id="14" type="checkbox" value="14" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 15 <input id="15" type="checkbox" value="15" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 16 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 17 <input type="checkbox" value="02" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 18 <input type="checkbox" value="03" name="pesquisa"> </label></td>											
+								<td><label class="niceform"> 16 <input id="16" type="checkbox" value="16" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 17 <input id="17" type="checkbox" value="17" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 18 <input id="18" type="checkbox" value="18" name="pesquisa"> </label></td>											
 							
 							</tr>
 							<tr>
-								<td><label class="niceform"> 19 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 20 <input type="checkbox" value="05" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 21 <input type="checkbox" value="11" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 19 <input id="19" type="checkbox" value="19" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 20 <input id="20" type="checkbox" value="20" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 21 <input id="21" type="checkbox" value="21" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 22 <input type="checkbox" value="12" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 23 <input type="checkbox" value="13" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 24 <input type="checkbox" value="14" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 22 <input id="22" type="checkbox" value="22" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 23 <input id="23" type="checkbox" value="23" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 24 <input id="24" type="checkbox" value="24" name="pesquisa"> </label></td>
 																		
 							</tr>
 							<tr>
-								<td><label class="niceform"> 25 <input type="checkbox" value="15" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 26 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 27 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 25 <input id="25" type="checkbox" value="25" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 26 <input id="26" type="checkbox" value="26" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 27 <input id="27" type="checkbox" value="27" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 28 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 29 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 30 <input type="checkbox" value="05" name="pesquisa"> </label></td>											
+								<td><label class="niceform"> 28 <input id="28" type="checkbox" value="28" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 29 <input id="29" type="checkbox" value="29" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 30 <input id="30" type="checkbox" value="30" name="pesquisa"> </label></td>											
 							
 							</tr>
 							<tr>
-								<td><label class="niceform"> 31 <input type="checkbox" value="16" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 32 <input type="checkbox" value="17" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 33 <input type="checkbox" value="18" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 31 <input id="31" type="checkbox" value="31" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 32 <input id="32" type="checkbox" value="32" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 33 <input id="33" type="checkbox" value="33" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 34 <input type="checkbox" value="19" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 35 <input type="checkbox" value="20" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 36 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								
-							
+								<td><label class="niceform"> 34 <input id="34" type="checkbox" value="34" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 35 <input id="35" type="checkbox" value="35" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 36 <input id="36" type="checkbox" value="36" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 37 <input type="checkbox" value="02" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 38 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 39 <input type="checkbox" value="04" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 37 <input id="37" type="checkbox" value="37" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 38 <input id="38" type="checkbox" value="38" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 39 <input id="39" type="checkbox" value="39" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 40 <input type="checkbox" value="05" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 41 <input type="checkbox" value="21" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 42 <input type="checkbox" value="22" name="pesquisa"> </label></td>
-								
-							</tr>
-							<tr>
-								<td><label class="niceform"> 43 <input type="checkbox" value="23" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 44 <input type="checkbox" value="24" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 45 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td><label class="niceform"> 46 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 47 <input type="checkbox" value="02" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 48 <input type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 40 <input id="40" type="checkbox" value="40" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 41 <input id="41" type="checkbox" value="41" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 42 <input id="42" type="checkbox" value="42" name="pesquisa"> </label></td>
 								
 							</tr>
 							<tr>
-								<td><label class="niceform"> 49 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 50 <input type="checkbox" value="05" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 51 <input type="checkbox" value="21" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 43 <input id="43" type="checkbox" value="43" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 44 <input id="44" type="checkbox" value="44" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 45 <input id="45" type="checkbox" value="45" name="pesquisa"> </label></td>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><label class="niceform"> 52 <input type="checkbox" value="22" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 53 <input type="checkbox" value="23" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 54 <input type="checkbox" value="24" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 46 <input id="46" type="checkbox" value="46" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 47 <input id="47" type="checkbox" value="47" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 48 <input id="48" type="checkbox" value="48" name="pesquisa"> </label></td>
 								
 							</tr>
 							<tr>
-								<td><label class="niceform"> 55 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 56 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 57 <input type="checkbox" value="02" name="pesquisa"> </label></td>
-								<td>
-								<td>
-								<td>
+								<td><label class="niceform"> 49 <input id="49" type="checkbox" value="49" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 50 <input id="50" type="checkbox" value="50" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 51 <input id="51" type="checkbox" value="51" name="pesquisa"> </label></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><label class="niceform"> 52 <input id="52" type="checkbox" value="52" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 53 <input id="53" type="checkbox" value="23" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 54 <input id="54" type="checkbox" value="54" name="pesquisa"> </label></td>
 								
-								<td><label class="niceform"> 58 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 59 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 60 <input type="checkbox" value="05" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 61 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 62 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 63 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 55 <input id="55" type="checkbox" value="55" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 56 <input id="56" type="checkbox" value="56" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 57 <input id="57" type="checkbox" value="57" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
 								
-								<td><label class="niceform"> 64 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 65 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 66 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 58 <input id="58" type="checkbox" value="58" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 59 <input id="59" type="checkbox" value="59" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 60 <input id="60" type="checkbox" value="60" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 67 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 68 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 69 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 61 <input id="61" type="checkbox" value="61" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 62 <input id="62" type="checkbox" value="62" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 63 <input id="63" type="checkbox" value="63" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
-								
-								<td><label class="niceform"> 70 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 71 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 72 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 64 <input id="64" type="checkbox" value="64" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 65 <input id="65" type="checkbox" value="65" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 66 <input id="66" type="checkbox" value="66" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 73 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 74 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 75 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 67 <input id="67" type="checkbox" value="67" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 68 <input id="68" type="checkbox" value="68" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 69 <input id="69" type="checkbox" value="69" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
-								
-								<td><label class="niceform"> 76 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 77 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 78 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 70 <input id="70" type="checkbox" value="70" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 71 <input id="71" type="checkbox" value="71" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 72 <input id="72" type="checkbox" value="72" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 79 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 80 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 81 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 73 <input id="73" type="checkbox" value="73" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 74 <input id="74" type="checkbox" value="74" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 75 <input id="75" type="checkbox" value="75" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
-								
-								<td><label class="niceform"> 82 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 83 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 84 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 76 <input id="76" type="checkbox" value="03" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 77 <input id="77" type="checkbox" value="77" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 78 <input id="78" type="checkbox" value="78" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 85 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 86 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 87 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 79 <input id="79" type="checkbox" value="79" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 80 <input id="80" type="checkbox" value="80" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 81 <input id="81" type="checkbox" value="81" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
-								
-								<td><label class="niceform"> 88 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 89 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 90 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 82 <input id="82" type="checkbox" value="82" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 83 <input id="83" type="checkbox" value="83" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 84 <input id="84" type="checkbox" value="84" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 91 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 92 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 93 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 85 <input id="85" type="checkbox" value="85" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 86 <input id="86" type="checkbox" value="86" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 87 <input id="87" type="checkbox" value="87" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
-								
-								<td><label class="niceform"> 94 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 95 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 96 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 88 <input id="88" type="checkbox" value="88" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 89 <input id="89" type="checkbox" value="89" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 90 <input id="90" type="checkbox" value="90" name="pesquisa"> </label></td>
 							</tr>
 							<tr>
-								<td><label class="niceform"> 97 <input type="checkbox" value="25" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 98 <input type="checkbox" value="01" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 99 <input type="checkbox" value="02" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 91 <input id="91" type="checkbox" value="91" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 92 <input id="92" type="checkbox" value="92" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 93 <input id="93" type="checkbox" value="93" name="pesquisa"> </label></td>
 								<td>
 								<td>
 								<td>
 								
-								<td><label class="niceform"> 100 <input type="checkbox" value="03" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 101 <input type="checkbox" value="04" name="pesquisa"> </label></td>
-								<td><label class="niceform"> 103 <input type="checkbox" value="05" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 94 <input id="94" type="checkbox" value="94" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 95 <input id="95" type="checkbox" value="95" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 96 <input id="96" type="checkbox" value="96" name="pesquisa"> </label></td>
+							</tr>
+							<tr>
+								<td><label class="niceform"> 97 <input id="97" type="checkbox" value="97" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 98 <input id="98" type="checkbox" value="98" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 99 <input id="99" type="checkbox" value="99" name="pesquisa"> </label></td>
+								<td>
+								<td>
+								<td>
+								
+								<td><label class="niceform"> 100 <input id="100" type="checkbox" value="100" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 101 <input id="101" type="checkbox" value="101" name="pesquisa"> </label></td>
+								<td><label class="niceform"> 102 <input id="102" type="checkbox" value="102" name="pesquisa"> </label></td>
 							</tr>
 						
 						</table>
-						
-							<div class="col-md-6">
+		        </div>	
+		        <div class="col-xs-6 col-sm-offset-1 col-sm-4">
+		        <p>
+		        	
+		        	{% for i in qnt %}
+		        	<p>
+		        		<h6>Passageiro {{i}}</h6>
+		        		<div class="form-group">
+							<label for="username">Nome completo</label>
+							<input type="text" class="form-control" name="username" id="id_username_debito" placeholder="" required="">
+							
+							<label for="username">CPF</label>
+							<input type="number" class="form-control" name="cpf" placeholder="somente os numeros" required="">
+						</div> <!-- form-group.// -->
+						<p>
+		        	{% endfor %}
+		        		
+		        		<div class="col-md-6">
 					        	<button type="submit" name="pesquisa" class="btn btn-success" >Reservar</button>
-					        </div>
-					 	
-					</form>
-		        </div>				
-			</div>
+					    </div>
+		        	
+		       		<P>
+				</div>
+				</form>
 		</div>
 		
+	<p>
+	<br>
+	<br>
+	<br>
 	<footer>
 	  <div class="footerHeader" ></div>
 	   <div class="row">
@@ -351,26 +329,56 @@ table, th, td {
 		</div>
     </div>
 	</footer>
-	
-	<div class="modal" id="my_modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	          <h4 class="modal-title">Modal header</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p>Adulto</p>
-	        <input type="text" name="bookId" value=""/>
-	        <p>Criança</p>
-	        <input type="text" name="bookId" value=""/>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Mudar</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>	
 </div>	
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+<script type="text/javascript">
+$(function(){
+	 pk_poltrona = $("#id_pk_pol").val();
+	 console.log(pk_poltrona)
+	 var x, i, j, selElmnt, a, b, c, td, tr;
+	 var arr = [];
+	 table = document.getElementById("myTable");
+	 td = table.getElementsByTagName("td");
+	 var input, filter, table, tr, td, i, d;
+	 tr = table.getElementsByTagName("tr");
+	 
+	 for (i = 0; i < td.length; i++) {
+		arr[i] = td[i].textContent
+	 }
+	 
+	 $.ajax({
+	        url: '{% url 'pesquisar-poltronas' %}',
+	        data: {
+	          'pk_poltrona': pk_poltrona
+	        },
+	        dataType: 'json',
+	        success: function (data) {
+	        	console.log(data.poltronas.length)
+	        	dt = data.poltronas
+	        	
+	        	d = parseInt(data.poltronas[0])
+	        	a = parseInt(arr[8])
+	        	console.log(d == a)
+	        	
+	        	for (v in arr){
+	        		for (d in dt){
+	        			if (parseInt(arr[v]) == parseInt(dt[d])){
+		        			console.log("if true")
+		        			console.log(dt[d])
+		        			$("#"+dt[d]).attr("disabled", true)
+		        		}
+	        		}
+	        	}
+	        	$("#id_03").attr("disabled", true);
+	        	
+	        }
+
+	        
+	      });
+
+});
+</script>
 </body>
 </html>

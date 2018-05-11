@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% load humanize %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Carrinho de compras</h1>
+      <p class="lead">{{ event.description }}</p>
+    </div>
+  </div>
+  <hr>
+ 
+  {% if cart %}
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Item</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Preço unitário</th>
+        <th scope="col">Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cart_item in cart.items %}
+      <tr>
+        <th scope="row">{{ cart_item.ticket.title }}</th>
+        <td>{{ cart_item.quantity }}</td>
+        <td>{{ cart_item.unit_price|intcomma }}</td>
+        <td>{{ cart_item.price|intcomma }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <strong>Total: {{ cart.price|intcomma }}</strong>
+  <hr>
+  <form name="form" onsubmit="return OnSubmitForm();" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary" name="operation" onclick="document.pressed=this.value" value="purchase">Comprar</button>
+    <button type="submit" class="btn btn-danger" name="operation" onclick="document.pressed=this.value" value="clear">Limpar</button>
+  </form>
+  {% else %}
+  Carrinho vazio.
+  {% endif %}
+  
+
+</div>
+</body>
+</html>

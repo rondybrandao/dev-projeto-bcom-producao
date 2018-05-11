@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'dev_radioanori',
     'administrador',
     'rest_framework',
+    'pagseguro',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 
 LOGIN_REDIRECT_URL = 'administrador/index'
+
+PAGSEGURO_EMAIL = 'rondynely@hotmail.com'
+PAGSEGURO_TOKEN = '9F7A75D37B074BF4812D45CA5091ABEC'
+PAGSEGURO_SANDBOX = False # se o valor for True, as requisições a api serão feitas usando o PagSeguro Sandbox.
+PAGSEGURO_LOG_IN_MODEL = False
+
+SECURE_REDIRECT_EXEMPT = 'retorno/pagseguro/'
