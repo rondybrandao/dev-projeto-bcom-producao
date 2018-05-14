@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^sandbox-inicio-pagamento/$', views.sandbox_inicio_pagseguro, name='inicio-pagseguro'),
     url(r'^sandbox-debito/$', views.sandbox_debito, name='sandbox-debito'),
     url(r'^sandbox-checkout-realizado/$', views.sandbox_checkout_realizado, name='checkout-realizado'),
+    url(r'^sandbox-checkbox/$', views.sandbox_checkbox, name='sandbox-checkbox'),
     
     #url(r'^viagens-list/$', views.viagem_list, name='viagem-list'),
     #url(r'^viagens-list/carrinho/$', views.cart_detail, name='cart_detail'),

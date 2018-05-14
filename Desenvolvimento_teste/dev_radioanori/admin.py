@@ -7,10 +7,12 @@ class ViagemAdmin(admin.ModelAdmin):
     list_display = ['pk',
                     'origem',
                     'destino',
-                    'embarcacao',
+                    'barco',
                     'preco_adulto',
                     'preco_crianca',
                     'data_da_viagem',]
+    def barco(self, obj):
+        return obj.embarcacao.nome
     
 
 class CarrinhoAdmin(admin.ModelAdmin):

@@ -1,0 +1,106 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<style type="text/css">
+		.check {
+    		opacity:0.5;
+			color:#996;
+		}
+		
+		/* input[type=checkbox] {
+  			display:none;
+		} */
+		
+	</style>
+	
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <table>
+    	<tr>
+    		<td><label><img src="{% static 'imagens/img-bradesco.jpg' %}" alt="..." class="img-thumbnail img-check"><input type="checkbox" name="pesquisa" id="item4" value="01" class="hidden" autocomplete="off"></label></td>
+			<td><label><img src="{% static 'imagens/img-bb.png' %}" alt="..." class="img-thumbnail img-check"><input type="checkbox" name="pesquisa" id="item4" value="02" class="hidden" autocomplete="off"></label></td>
+    	</tr>
+    </table>
+    
+    <div class="form-group">
+    <label for="ativo_check" class="col-sm-2 control-label">Ativo</label>
+    <div class="col-sm-10">
+        <div class="checkbox">
+            <label>
+                <input id="ativo_check" name="ativo_check" type="checkbox" value="ativo" >
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="cancelado_check" class="col-sm-2 control-label">Cancelado</label>
+    <div class="col-sm-10">
+        <div class="checkbox">
+            <label>
+                <input id="cancelado_check" name="cancelado_check" type="checkbox" value="cancelado" >
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="finalizado_check" class="col-sm-2 control-label">Finalizado</label>
+    <div class="col-sm-10">
+        <div class="checkbox">
+            <label>
+                <input id="finalizado_check" name="finalizado_check" type="checkbox" value="finalizado">
+            </label>
+        </div>
+    </div>
+</div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  	<script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+  	
+  	<script type="text/javascript">
+  	$(document).ready(function(e){
+		$(".img-check").click(function(){
+			$(this).toggleClass("check");
+		});
+	});
+  	
+  
+	  	var checkboxes = $('.checkbox [type="checkbox"]');
+	  	checkboxes.on('change', function() {
+	  	    var el = this;
+	  	    checkboxes.each(function() {
+	  	        if (this != el) this.checked = false;
+	  	    });
+	  	});
+  
+
+	</script>
+  
+  </body>
+</html>

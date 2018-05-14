@@ -489,28 +489,34 @@ def sandbox_debito(request):
         amount = '{:.2f}'.format(amount)
         nome = request.POST.get('username')
         cpf = request.POST.get('cpf')
+        brand = request.POST.get('brand_radio')
         hashPagseguro = request.POST.get('hash')
-        descricao = carrinho.viagem.destino
+        qnt = carrinho.qnt_inteira + carrinho.qnt_meia
+        descricao = "beiraonline " + carrinho.viagem.origem + "-" + carrinho.viagem.destino
         
-        item1 = PagSeguroItem(id=pk, description=descricao, amount=amount, quantity=1)
+        print('brand:',brand)
+        print('nome:',nome)
+        print('cpf',cpf)
+        
+        item1 = PagSeguroItem(id=pk, description=descricao, amount=amount, quantity=qnt)
         
         api = PagSeguroApiTransparent()
         api.add_item(item1)
         
-        sender = {'name': 'Jose Comprador', 'area_code': 92, 'phone': 56273440, 'email': 'comprador@uol.com.br', 'cpf': '22111944785',}
+        sender = {'name': nome, 'area_code': 92, 'phone': 56273440, 'email': 'comprador@uol.com.br', 'cpf': '22111944785',}
         api.set_sender(**sender)
         
         shipping = {'street': "Av. Brigadeiro Faria Lima", 'number': 1384, 'complement': '5o andar', 'district': 'Jardim Paulistano', 'postal_code': '01452002', 'city': 'Sao Paulo', 'state': 'SP', 'country': 'BRA',}
         api.set_shipping(**shipping)
         
         api.set_payment_method('eft')
-        api.set_bank_name('bradesco')
+        api.set_bank_name('itau')
         
         api.set_sender_hash(hashPagseguro)
         
         data = api.checkout()
         
-        print("data", data)
+        #print("data", data)
         
         if data['success'] is False:
             raise CheckoutException(data['message'])
@@ -520,6 +526,9 @@ def sandbox_debito(request):
         return redirect(payment_url)
   
     return HttpResponse("deu certo")
+
+def sandbox_checkbox(request):
+    return render(request, 'dev_radioanori/sandbox-checkbox.html')
 
 def load_signal(sender, transaction, **kwargs):
     print("load_signal")
